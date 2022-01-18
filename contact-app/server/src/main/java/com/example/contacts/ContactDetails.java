@@ -11,6 +11,8 @@ public class ContactDetails {
 //    private Date date;
     private Integer score;
 
+    public ContactDetails() {}
+
     public ContactDetails(Integer id, User user, String name, String email, Integer score) {
         this.id = id;
         this.user = user;

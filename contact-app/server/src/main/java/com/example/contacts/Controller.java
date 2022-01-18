@@ -23,8 +23,8 @@ public class Controller {
     @PostMapping("/addContact")
     public void addContact(@RequestBody ContactDetails contact) { jdbcRepo.insert(contact); }
 
-//    @PostMapping("/getContacts")
-//    public void getContact(@RequestBody String name) { return jdbcRepo.get(name); }
+    @PostMapping("/getContacts")
+    public List<ContactDetails> getContacts(@RequestParam(value = "name", defaultValue = "") String name) { return jdbcRepo.get(name); }
 
     @DeleteMapping("/deleteContact")
     public void deleteContact(@RequestBody ContactDetails id) { jdbcRepo.delete(id); }
