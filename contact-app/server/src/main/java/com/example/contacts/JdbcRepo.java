@@ -19,6 +19,17 @@ public class JdbcRepo {
     @Autowired
     NamedParameterJdbcTemplate jdbcTemplate;
 
+    class UserRowMapper implements RowMapper<User> {
+        @Override
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            return user;
+        }
+    }
+
     class ContactDetailsRowMapper implements RowMapper<ContactDetails> {
         @Override
         public ContactDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -30,6 +41,30 @@ public class JdbcRepo {
             contact.setScore(rs.getInt("score"));
             return contact;
         }
+    }
+
+    public String register(String name, String email, String password)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("name", name);
+        params.put("email", email);
+        params.put("password", password);
+        String sql_query = "insert into users(name, email, password) values(:name, :email, :password)";
+        jdbcTemplate.update(sql_query, params);
+        return "Registered"; 
+    }
+
+    public String login(String email, String password)
+    {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("email", email);
+        params.put("password", password);
+        String sql_query = "select * from users where email = :email and password = :password";
+        List<User> user = jdbcTemplate.query(sql_query, params, new UserRowMapper());
+        if (user.size() == 1) {
+            return "session_key";
+        }
+        return "Error";
     }
 
     public void insert(ContactDetails contact)
@@ -48,7 +83,7 @@ public class JdbcRepo {
     public void update(ContactDetails contact)
     {
         BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(contact);
-        String sql_update = "update contacts SET id = :id, name = :name, email = :email,score = :score where id = :id ";
+        String sql_update = "update contacts SET id = :id, name = :name, email = :email, score = :score where id = :id ";
         jdbcTemplate.update(sql_update, paramSource);
     }
 

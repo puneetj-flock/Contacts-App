@@ -20,11 +20,24 @@ public class Controller {
         return "Hello";
     }
 
+    @PostMapping("/register")
+    public String register(@RequestParam(value = "name") String name, @RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+        return jdbcRepo.register(name, email, password); 
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+        return jdbcRepo.login(email, password); 
+    }
+
+    // @PostMapping("/logout")
+    // public String logout(@RequestParam(value = "session_key") String session_key) { jdbcRepo.logout(session_key); }
+
     @PostMapping("/addContact")
     public void addContact(@RequestBody ContactDetails contact) { jdbcRepo.insert(contact); }
 
     @PostMapping("/getContacts")
-    public List<ContactDetails> getContacts(@RequestParam(value = "name", defaultValue = "") String name) { return jdbcRepo.get(name); }
+    public List<ContactDetails> getContacts(@RequestParam(value = "name") String name) { return jdbcRepo.get(name); }
 
     @DeleteMapping("/deleteContact")
     public void deleteContact(@RequestBody ContactDetails id) { jdbcRepo.delete(id); }
