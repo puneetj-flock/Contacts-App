@@ -1,23 +1,28 @@
-CREATE TABLE Contacts (
-  id int NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL,
-  email varchar(255) NOT NULL UNIQUE,
-  address varchar(255),
-  birthday date,
-  score int DEFAULT 1000000,
-  PRIMARY KEY (id)
-);
 CREATE TABLE Users (
- id int NOT NULL AUTO_INCREMENT,
- name varchar(255) NOT NULL,
- email varchar(255) NOT NULL UNIQUE,
- password varchar(255),
+ id INT NOT NULL AUTO_INCREMENT,
+ name VARCHAR(255),
+ email VARCHAR(255) NOT NULL UNIQUE,
+ password VARCHAR(255),
  PRIMARY KEY (id)
 );
 
+CREATE TABLE Contacts (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  contact_num  VARCHAR(15),
+  name VARCHAR(255),
+  email VARCHAR(255),
+  address VARCHAR(255),
+  -- birthday DATE,
+  score INT DEFAULT 1000000,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
 CREATE TABLE Sessions (
- id int NOT NULL AUTO_INCREMENT,
- user_id varchar(255) NOT NULL,
- token varchar(255) NOT NULL UNIQUE,
- expire TIMESTAMP,
- PRIMARY KEY (id) );
+ session_token VARCHAR(255) NOT NULL,
+ user_id INT NOT NULL,
+ expiry_time TIMESTAMP NOT NULL,
+ PRIMARY KEY(session_token),
+ FOREIGN KEY (user_id) REFERENCES Users(id)
+);

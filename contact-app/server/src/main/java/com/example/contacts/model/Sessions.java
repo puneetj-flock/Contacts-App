@@ -3,31 +3,31 @@ package com.example.contacts.model;
 import java.sql.Timestamp;
 
 public class Sessions {
-    private String token;
-    private String user_id;
-    private Timestamp time;
+    private String sessionToken;
+    private Integer userId;
+    private Timestamp expiryTime;
 
     public String getToken() {
-        return token;
+        return sessionToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setToken(String sessionToken) {
+        this.sessionToken = sessionToken;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public Timestamp getExpiryTime() {
+        return expiryTime;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setExpiryTime(Timestamp expiryTime) {
+        this.expiryTime = expiryTime;
     }
 }
