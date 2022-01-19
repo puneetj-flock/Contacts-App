@@ -1,6 +1,4 @@
-package com.example.contacts;
-
-import java.util.Date;
+package com.example.contacts.model;
 
 public class ContactDetails {
     private Integer id;

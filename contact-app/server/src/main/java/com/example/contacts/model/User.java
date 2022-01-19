@@ -1,4 +1,4 @@
-package com.example.contacts;
+package com.example.contacts.model;
 
 public class User {
     private Integer id;
