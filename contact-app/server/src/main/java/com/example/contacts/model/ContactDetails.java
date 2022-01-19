@@ -1,23 +1,16 @@
 package com.example.contacts.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ContactDetails {
     private Integer id;
+    @SerializedName("user_id")
     private Integer userId;
     private String name;
     private String email;
-//    private String address;
-//    private Date date;
+    // private String address;
+    // private Date date;
     private Integer score;
-
-    public ContactDetails() {}
-
-    public ContactDetails(Integer id, Integer userId, String name, String email, Integer score) {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.score = score;
-    }
 
     public Integer getId() {
         return id;

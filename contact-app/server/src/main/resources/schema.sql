@@ -1,9 +1,9 @@
 CREATE TABLE Users (
- id INT NOT NULL AUTO_INCREMENT,
- name VARCHAR(255),
- email VARCHAR(255) NOT NULL UNIQUE,
- password VARCHAR(255),
- PRIMARY KEY (id)
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255),
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255),
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE Contacts (
@@ -20,9 +20,9 @@ CREATE TABLE Contacts (
 );
 
 CREATE TABLE Sessions (
- session_token VARCHAR(255) NOT NULL,
- user_id INT NOT NULL,
- expiry_time TIMESTAMP NOT NULL,
- PRIMARY KEY(session_token),
- FOREIGN KEY (user_id) REFERENCES Users(id)
+  session_token VARCHAR(255) NOT NULL,
+  user_id INT NOT NULL,
+  expiry_time TIMESTAMP NOT NULL,
+  PRIMARY KEY(session_token),
+  FOREIGN KEY (user_id) REFERENCES Users(id)
 );

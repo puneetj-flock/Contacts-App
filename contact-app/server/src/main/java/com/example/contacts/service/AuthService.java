@@ -1,6 +1,6 @@
 package com.example.contacts.service;
 
-import com.example.contacts.JdbcRepo;
+import com.example.contacts.db.AuthDB;
 import com.example.contacts.model.User;
 import com.example.contacts.utils.SessionHelper;
 
@@ -9,17 +9,27 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class AuthService {
-    
+
     @Autowired
-    JdbcRepo jdbcRepo;
+    AuthDB authDB;
 
     public String createNewSession(User user) {
         String session_token = SessionHelper.generateRandomToken();
-        jdbcRepo.addSession(user, session_token);
+        authDB.addSession(user, session_token);
         return session_token;
     }
-    
+
     public String login(User user) {
+        user = authDB.login(user);
         return createNewSession(user);
+    }
+
+    public String register(User user) {
+        authDB.register(user);
+        return login(user);
+    }
+
+    public void logout(String sessionToken) {
+        authDB.logout(sessionToken);
     }
 }
