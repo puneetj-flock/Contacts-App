@@ -10,9 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.example.contacts.utils.Constants;
+import com.example.contacts.utils.SessionHelper;
 
 @Repository
 public class JdbcRepo {
@@ -62,9 +66,18 @@ public class JdbcRepo {
         String sql_query = "select * from users where email = :email and password = :password";
         List<User> user = jdbcTemplate.query(sql_query, params, new UserRowMapper());
         if (user.size() == 1) {
-            return "session_key";
+            return SessionHelper.generateNewToken();
         }
         return "Error";
+    }
+
+    public void addSession(User user, String session_token) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("session_token", session_token);
+        params.put("user", user);
+        params.put("expiry_time", new Timestamp(System.currentTimeMillis() + Constants.TIME_30_MIN));
+        String sql_query = "INSERT INTO sessions(session_token, user, expiry_time) VALUES(:session_token, :user, :expiry_time)";
+        jdbcTemplate.update(sql_query, params);
     }
 
     public void insert(ContactDetails contact)
