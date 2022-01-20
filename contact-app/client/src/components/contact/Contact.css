@@ -1,0 +1,18 @@
+.contact-box {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 1px solid black;
+}
+.contact-avatar {
+  padding: 10px;
+}
+.contact-name {
+  align-self: center;
+  width: 60%;
+  font-size: large;
+}
+
+.contact-edit,
+.contact-delete {
+  align-self: center;
+}

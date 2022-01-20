@@ -1,0 +1,43 @@
+.loginpage-wrapper {
+  display: flex;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+.loginpage-body {
+  width: 280px;
+  height: 450px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: aqua;
+}
+.loginpage-header {
+  margin: 20px 80px;
+}
+.loginpage-form-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* .loginpage-form input {
+  border-radius: 25px;
+  outline: none;
+  height: 40px;
+  width: 80%;
+  padding: 0 15px;
+  border: 1px solid grey;
+  margin-bottom: 20px;
+}
+
+.loginpage-form button {
+  font-size: 20px;
+  padding: 5px 15px;
+  border-radius: 25px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+} */

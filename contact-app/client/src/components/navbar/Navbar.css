@@ -4,7 +4,7 @@
   background-color: fuchsia;
   display: flex;
 }
-.search-bar {
+/* .search-bar {
   justify-content: center;
   width: 10em;
   border-radius: 25px;
@@ -14,4 +14,4 @@
 .search-bar > input {
   border: none;
   outline-width: 0;
-}
+} */
