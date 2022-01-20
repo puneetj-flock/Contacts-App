@@ -9,11 +9,10 @@ CREATE TABLE Users (
 CREATE TABLE Contacts (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
-  contact_num  VARCHAR(15),
+  contact VARCHAR(15),
   name VARCHAR(255),
   email VARCHAR(255),
   address VARCHAR(255),
-  -- birthday DATE,
   score INT DEFAULT 1000000,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES Users(id)
@@ -26,3 +25,7 @@ CREATE TABLE Sessions (
   PRIMARY KEY(session_token),
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+
+CREATE INDEX Contacts_User_id_Name ON Contacts(user_id ASC, name ASC);
+
+CREATE INDEX Sessions_User_id ON Sessions(user_id ASC);

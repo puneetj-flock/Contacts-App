@@ -26,4 +26,9 @@ public class AuthController {
     public void logout(@RequestHeader(value = "sessionToken") String sessionToken) {
         authService.logout(sessionToken);
     }
+
+    @GetMapping("/welcome")
+    public String hello() {
+        return "Welcome";
+    }
 }

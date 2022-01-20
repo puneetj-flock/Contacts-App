@@ -19,7 +19,9 @@ public class ObjectRowMapper {
         contact.setId(rs.getInt("id"));
         contact.setUserId(rs.getInt("user_id"));
         contact.setName(rs.getString("name"));
+        contact.setContact(rs.getString("contact"));
         contact.setEmail(rs.getString("email"));
+        contact.setAddress(rs.getString("address"));
         contact.setScore(rs.getInt("score"));
         return contact;
     };
