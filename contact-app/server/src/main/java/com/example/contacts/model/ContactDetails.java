@@ -7,9 +7,9 @@ public class ContactDetails {
     @SerializedName("user_id")
     private Integer userId;
     private String name;
+    private String contact;
     private String email;
-    // private String address;
-    // private Date date;
+    private String address;
     private Integer score;
 
     public Integer getId() {
@@ -36,12 +36,28 @@ public class ContactDetails {
         this.name = name;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getScore() {

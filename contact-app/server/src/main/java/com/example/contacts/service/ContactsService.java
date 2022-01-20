@@ -6,6 +6,7 @@ import com.example.contacts.service.ContactsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -18,28 +19,30 @@ public class ContactsService {
     @Autowired
     ContactsDB contactsDB;
     
-    public String index() {
-        return "Hello";
+    public ModelAndView index() {
+        return new ModelAndView("redirect:/welcome");
+    }
+
+    public List<ContactDetails> getContacts(String sessionToken) {
+        Integer userId = authDB.checkAuth(sessionToken);
+        return contactsDB.getContacts(userId);
     }
 
     public void addContact(String sessionToken, ContactDetails contact) {
         Integer userId = authDB.checkAuth(sessionToken);
         System.out.println(userId);
-        contactsDB.insert(userId, contact);
-    }
-
-    public List<ContactDetails> getContacts(String sessionToken) {
-        Integer userId = authDB.checkAuth(sessionToken);
-        return contactsDB.get(userId);
+        contact.setUserId(userId);
+        contactsDB.addContact(contact);
     }
 
     public void deleteContact(String sessionToken, Integer contactId) {
         Integer userId = authDB.checkAuth(sessionToken);
-        contactsDB.delete(userId, contactId);
+        contactsDB.deleteContact(userId, contactId);
     }
 
     public void updateContact(String sessionToken, ContactDetails contact) {
         Integer userId = authDB.checkAuth(sessionToken);
-        contactsDB.update(userId, contact);
+        contact.setUserId(userId);
+        contactsDB.updateContact(contact);
     }
 }
