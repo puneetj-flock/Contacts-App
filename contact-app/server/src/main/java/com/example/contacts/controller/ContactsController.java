@@ -9,18 +9,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class ContactsController {
 
     @Autowired
-    ContactsService contactsService;
+    private ContactsService contactsService;
 
-    @GetMapping("/")
-    public ModelAndView index() {
-        return contactsService.index();
+
+    @GetMapping("/status")
+    public String status() {
+        return "OK";
     }
 
-    @PostMapping("/getContacts")
+
+    @GetMapping("/getContacts")
     public List<ContactDetails> getContacts(@RequestHeader(value = "sessionToken") String sessionToken) {
         return contactsService.getContacts(sessionToken);
     }
@@ -31,15 +34,15 @@ public class ContactsController {
         contactsService.addContact(sessionToken, contact);
     }
 
-    @PostMapping("/updateContact")
+    @PutMapping("/updateContact")
     public void updateContact(@RequestHeader(value = "sessionToken") String sessionToken,
             @RequestBody ContactDetails contact) {
         contactsService.updateContact(sessionToken, contact);
     }
 
-    @DeleteMapping("/deleteContact")
+    @DeleteMapping("/deleteContact/")
     public void deleteContact(@RequestHeader(value = "sessionToken") String sessionToken,
-            @RequestParam(value = "contact_id") Integer contactId) {
+            @RequestParam(value = "id") int contactId) {
         contactsService.deleteContact(sessionToken, contactId);
     }
 

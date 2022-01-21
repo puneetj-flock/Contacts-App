@@ -4,20 +4,30 @@ import React from "react";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { setMenu } from "../../redux/menu";
+import { useDispatch } from "react-redux";
 
 // import IconButton from "@mui/material/IconButton";
 
 import "./Contact.css";
 
 const Contact = () => {
+  const dispatch = useDispatch();
   return (
-    <div className="contact-box">
+    <div
+      className="contact-box"
+      onClick={() => dispatch(setMenu("ShowContact"))}
+    >
       <div className="contact-avatar">
-        <Avatar {...stringAvatar("Puneet hero")} />
+        <Avatar {...stringAvatar("Test Name")} />
       </div>
-      <div className="contact-name">Puneet Hero</div>
+      <div className="contact-name">Test Name</div>
       <div className="contact-edit">
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            dispatch(setMenu("EditContact"));
+          }}
+        >
           <ModeEditRoundedIcon />
         </IconButton>
       </div>

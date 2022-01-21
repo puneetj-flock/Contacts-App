@@ -3,6 +3,7 @@ package com.example.contacts.db;
 import com.example.contacts.model.*;
 import static com.example.contacts.utils.ObjectRowMapper.*;
 import static com.example.contacts.utils.Constants.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,7 +25,7 @@ public class AuthDB {
     NamedParameterJdbcTemplate jdbcTemplate;
 
     public Integer checkAuth(String sessionToken) {
-        System.out.println(sessionToken);
+        System.out.println(sessionToken + "Token Here" + '\n');
         Timestamp current_time = Timestamp.from(Instant.now());
         Map<String, Object> sourceParams = new HashMap<>();
         sourceParams.put("session_token", sessionToken);
@@ -33,11 +34,13 @@ public class AuthDB {
             session = jdbcTemplate.queryForObject(SQL_SESSION_SEL, sourceParams, SessionObjectRowMapper);
         } catch (EmptyResultDataAccessException e) {
             System.out.println(e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            System.out.println("Session Not Found");
+            throw new ResponseStatusException(NOT_FOUND);
         }
         if (session.getExpiryTime().getTime() < current_time.getTime()) {
             logout(sessionToken);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND); // redirect to login
+            System.out.println("TIME EXPIRED\n");
+            throw new ResponseStatusException(NOT_FOUND); // redirect to login
         }
         return session.getUserId();
     }
@@ -55,7 +58,8 @@ public class AuthDB {
         Map<String, Object> params = new HashMap<>();
         params.put("session_token", session_token);
         params.put("user_id", user.getId());
-        params.put("expiry_time", new Timestamp(System.currentTimeMillis() + TIME_1_HOUR));
+//        TIME_1_HOUR
+        params.put("expiry_time", new Timestamp(System.currentTimeMillis() + TIME_1_DAY));
         System.out.println(params);
         jdbcTemplate.update(SQL_SESSION_INS, params);
     }
@@ -67,7 +71,7 @@ public class AuthDB {
             user = jdbcTemplate.queryForObject(SQL_USER_SEL, paramSource, UserRowMapper);
         } catch (EmptyResultDataAccessException e) {
             System.out.println(e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND);
         }
         System.out.println(user.getEmail());
         return user;

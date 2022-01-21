@@ -18,10 +18,7 @@ public class ContactsService {
 
     @Autowired
     ContactsDB contactsDB;
-    
-    public ModelAndView index() {
-        return new ModelAndView("redirect:/welcome");
-    }
+
 
     public List<ContactDetails> getContacts(String sessionToken) {
         Integer userId = authDB.checkAuth(sessionToken);

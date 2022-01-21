@@ -6,11 +6,13 @@ import com.example.contacts.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 public class AuthController {
 
     @Autowired
     AuthService authService;
+
 
     @PostMapping("/register")
     public String register(@RequestBody User user) {
