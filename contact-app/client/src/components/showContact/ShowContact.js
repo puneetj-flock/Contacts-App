@@ -1,14 +1,16 @@
 import React from "react";
 
-const ShowContact = () => {
+import { BaseContact } from "../baseContact/BaseContact";
+
+// import "./ShowContact.css";
+// import "../baseContact/BaseContact.css";
+
+const ShowContact = (props) => {
   return (
-    <div className="wrapper">
-      <div className="box">Name : Puneet</div>
-      <div>Contact Number : 123456789</div>
-      <div>Email : abc@gmail.com</div>
-      <div>Address : loremipsm</div>
-    </div>
-  );
+    <BaseContact {...props} heading_text="Contact Details" button_text="Edit" rootStyle="contact-wrapper-1"/>
+  )
 };
+
+// document.getElementById("outlined-required").setAttribute("readonly", "true");
 
 export { ShowContact };
