@@ -15,7 +15,6 @@ export class ApiManager {
   }
 
   async getContacts() {
-    console.log("calling the api " + this.sessionToken);
     return await fetch(GET_CONTACTS, {
       method: "GET",
       headers: {
@@ -31,7 +30,6 @@ export class ApiManager {
   }
 
   async addContact(contact) {
-    console.log(contact);
     const data_1 = await fetch(ADD_CONTACT, {
       method: "POST",
       headers: {
@@ -56,12 +54,18 @@ export class ApiManager {
       },
       body: JSON.stringify(contact),
     });
-    if (data.status === 402) {
+    if (data.status === 401) {
       throw new Error("Token Expired");
-    } else {
-      return data.json();
     }
   }
+  // if (data.status === 402) {
+  //   throw new Error("Token Expired");
+  // } else {
+  //   console.log("data.json()");
+  //   const data_1 = data.json();
+  //   console.log(data_1);
+  //   return data_1;
+  // }
 
   async deleteContact(contactId) {
     const data = await fetch(DELETE_CONTACTS + "/" + toString(contactId), {
@@ -119,23 +123,6 @@ export class ApiManager {
     });
     if (data.status === 402) {
       throw new Error("Token Expired");
-    } else {
-      return data.json();
     }
   }
 }
-// export const getContacts = (url, sessionToken) => {
-//   // const ses_tok = localStorage.getItem("sessionToken");
-//   return fetch(url, {
-//     method: "GET",
-//     headers: {
-//       sessionToken: sessionToken,
-//     },
-//   }).then((data) => {
-//     if (data.status === 401) {
-//       throw new Error("Token Expired");
-//     } else {
-//       return data.json();
-//     }
-//   });
-// };

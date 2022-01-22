@@ -1,11 +1,15 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { Contact } from "../contact/Contact";
 import { ContactList } from "../contactList/ContactList";
 import { setMenu } from "../../redux/menu";
 import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/searchText";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import "./Sidebar.css";
+import { setSelectedContact } from "../../redux/selectedContact";
+import { emptyContact } from "../mainContent/MainContent";
 const Sidebar = () => {
   const dispatch = useDispatch();
 
@@ -13,15 +17,18 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="navbar">
         <div className="add-contact">
-          <Button
-            variant="contained"
-            onClick={() => dispatch(setMenu("AddContact"))}
-          >
-            Add Contact
-          </Button>
+
+          <Fab color="primary" aria-label="add" onClick={() => {
+            dispatch(setSelectedContact(emptyContact))
+            dispatch(setMenu("AddContact"));
+          }}>
+            <AddIcon />
+          </Fab>
         </div>
         <div className="search-bar">
-          <input placeholder="Search Contact" />
+          <input placeholder="Search Contact" onChange={e => {
+            dispatch(setSearchText(e.target.value));
+          }} />
         </div>
       </div>
       <ContactList />
