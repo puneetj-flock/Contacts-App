@@ -3,7 +3,7 @@ package com.example.contacts.db;
 import com.example.contacts.model.*;
 import static com.example.contacts.utils.ObjectRowMapper.*;
 import static com.example.contacts.utils.Constants.*;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,6 +17,8 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Repository
 public class AuthDB {
@@ -44,8 +46,21 @@ public class AuthDB {
         }
         return session.getUserId();
     }
+    public boolean validateEmail( String email)
+    {
+        Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.find();
+    }
 
     public String register(User user) {
+        if(!validateEmail(user.getEmail()))
+        {
+            throw new ResponseStatusException(NOT_IMPLEMENTED);
+        }
+
         BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
         int count = jdbcTemplate.queryForObject(SQL_USER_CNT, paramSource, Integer.class);
         if (count > 0)

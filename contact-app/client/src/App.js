@@ -15,16 +15,19 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { setSessionToken } from "./redux/sessionToken";
 import { useEffect } from "react";
+import { ApiManager } from "./api/Index";
 // save token in local storage
 // use state take token
 
 function App() {
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    console.log("HI");
-    dispatch(setSessionToken(localStorage.getItem("sessionToken")));
-  }, [dispatch]);
+    localStorage.getItem("sessionToken");
+    console.log("Calling GetContacts");
+    console.log(localStorage.getItem("sessionToken"));
+    const a = new ApiManager();
+    a.getContacts().then((res) => console.log(res));
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>

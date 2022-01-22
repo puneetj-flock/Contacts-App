@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./AddContact.css";
 import { addContact } from "../../api/Index";
 import { ADD_CONTACT } from "../../api/contants";
-
+import { ApiManager } from "../../api/Index";
 const AddContact = () => {
   const sessionToken = useSelector((state) => state.sessionToken.token);
   const [contactInfo, setContactInfo] = useState({
@@ -19,14 +19,29 @@ const AddContact = () => {
     email: "",
   });
 
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+
   const changeHandler = (prop) => {
     return (event) => {
       setContactInfo({ ...contactInfo, [prop]: event.target.value });
     };
   };
   const addContactHandler = () => {
-    console.log(contactInfo);
-    addContact(ADD_CONTACT, sessionToken, contactInfo);
+    if (
+      validateEmail(contactInfo.email) &&
+      contactInfo.name !== "" &&
+      contactInfo.contact !== ""
+    ) {
+      const apiManager = new ApiManager();
+      console.log(contactInfo);
+      apiManager.addContact(contactInfo);
+    } else {
+      alert("Please Enter correct values");
+    }
   };
   return (
     <div className="addcontact-wrapper">
@@ -37,7 +52,6 @@ const AddContact = () => {
             required
             id="outlined-required"
             label="Name"
-            defaultValue="Name"
             onChange={changeHandler("name")}
           />
           <TextField
@@ -45,7 +59,6 @@ const AddContact = () => {
             required
             id="outlined-required"
             label="Contact Number"
-            defaultValue="Contact Number"
             onChange={changeHandler("contact")}
           />
           <TextField
@@ -53,17 +66,14 @@ const AddContact = () => {
             required
             id="outlined-required"
             label="Email Id"
-            defaultValue="Email Id"
             onChange={changeHandler("email")}
           />
           <TextField
             margin="normal"
-            required
             id="outlined-multiline-flexible"
             label="Address"
             multiline
             maxRows={4}
-            defaultValue="Address"
             onChange={changeHandler("address")}
           />
         </div>

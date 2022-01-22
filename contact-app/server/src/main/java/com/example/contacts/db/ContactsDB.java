@@ -26,6 +26,8 @@ public class ContactsDB {
     }
     
     public void addContact(ContactDetails contact) {
+        System.out.println("Contact Added here \n");
+        System.out.println(contact);
         BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(contact);
         System.out.println(paramSource);
         int c = jdbcTemplate.update(SQL_CONTACT_INS, paramSource);

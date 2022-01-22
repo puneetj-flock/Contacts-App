@@ -4,12 +4,9 @@ import { Sidebar } from "../sidebar/Sidebar";
 import { useSelector, useDispatch } from "react-redux";
 import { ShowContact } from "../showContact/ShowContact";
 import "./MainContent.css";
-import { fn, fn2, getContacts } from "../../api/Index";
-import { useNavigate } from "react-router-dom";
-import { setSessionToken } from "../../redux/sessionToken";
-import { GET_CONTACTS } from "../../api/contants";
-import { setContacts } from "../../redux/contacts";
 
+import { setContacts } from "../../redux/contacts";
+import { ApiManager } from "../../api/Index";
 const MainContent = (props) => {
   const value = useSelector((state) => state.menu.value);
   const Menu = () => {
@@ -19,15 +16,14 @@ const MainContent = (props) => {
     return <></>;
   };
 
-  const sessionToken = useSelector((state) => state.sessionToken.token);
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getContacts(GET_CONTACTS, sessionToken).then((res) => {
+    const a = new ApiManager();
+    a.getContacts().then((res) => {
       dispatch(setContacts(res));
     });
-  }, [dispatch, sessionToken]);
+  }, [dispatch]);
 
   return (
     <div className="body-wrapper">

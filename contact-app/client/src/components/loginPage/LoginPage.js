@@ -4,20 +4,31 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../api/Index";
-import { LOGIN_USER } from "../../api/contants";
-import { setSessionToken } from "../../redux/sessionToken";
-
+import { ApiManager } from "../../api/Index";
+import { useEffect } from "react";
 const LoginPage = function () {
   let navigate = useNavigate();
-  let dispatch = useDispatch();
-  const sessionToken = useSelector((state) => state.sessionToken.token);
+
+  useEffect(() => {
+    const sessionToken = localStorage.getItem("sessionToken");
+    if (sessionToken) {
+      console.log("Session Token Found at login sending to home");
+      navigate("/", { replace: true });
+    } else {
+      console.log("Session Token not found at login");
+    }
+  }, [navigate]);
 
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
 
   const changeHandler = (prop) => {
     return (event) => {
@@ -26,14 +37,20 @@ const LoginPage = function () {
   };
 
   const handleSignIn = () => {
-    loginUser(LOGIN_USER, loginInfo)
-      .then((res) => {
-        dispatch(setSessionToken(res));
-        navigate("/", { replace: true });
-      })
-      .catch((err) => {
-        console.log("Error in Login");
-      });
+    if (validateEmail(loginInfo.email)) {
+      const apiManager = new ApiManager();
+      apiManager
+        .loginUser(loginInfo)
+        .then((res) => {
+          localStorage.setItem("sessionToken", res);
+          navigate("/", { replace: true });
+        })
+        .catch((err) => {
+          console.log("Error in Login");
+        });
+    } else {
+      alert("Please Enter Correct Email");
+    }
   };
 
   const handleRegister = () => {
@@ -52,7 +69,7 @@ const LoginPage = function () {
               required
               id="outlined-required"
               label="Email"
-              defaultValue="Email Id"
+              // defaultValue="Email Id"
               onChange={changeHandler("email")}
             />
             <TextField
@@ -60,7 +77,7 @@ const LoginPage = function () {
               id="outlined-required"
               label="Password"
               type="password"
-              defaultValue="Password"
+              // defaultValue="Password"
               onChange={changeHandler("password")}
             />
             <Button type="submit" variant="contained" onClick={handleSignIn}>
