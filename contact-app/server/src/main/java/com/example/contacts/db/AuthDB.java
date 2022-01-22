@@ -27,7 +27,7 @@ public class AuthDB {
     NamedParameterJdbcTemplate jdbcTemplate;
 
     public Integer checkAuth(String sessionToken) {
-        System.out.println(sessionToken + "Token Here" + '\n');
+        System.out.println(sessionToken);
         Timestamp current_time = Timestamp.from(Instant.now());
         Map<String, Object> sourceParams = new HashMap<>();
         sourceParams.put("session_token", sessionToken);

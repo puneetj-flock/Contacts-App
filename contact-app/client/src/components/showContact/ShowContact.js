@@ -1,14 +1,23 @@
 import React from "react";
 
-const ShowContact = () => {
+import { BaseContact } from "../baseContact/BaseContact";
+import { setMenu } from "../../redux/menu";
+import { useDispatch } from "react-redux";
+
+// import "./ShowContact.css";
+// import "../baseContact/BaseContact.css";
+
+const ShowContact = (prps) => {
+  const dispatch = useDispatch();
+
+  const showContactHandler = contact => {
+    dispatch(setMenu("EditContact"));
+  };
   return (
-    <div className="wrapper">
-      <div className="box">Name : Puneet</div>
-      <div>Contact Number : 123456789</div>
-      <div>Email : abc@gmail.com</div>
-      <div>Address : loremipsm</div>
-    </div>
-  );
+    <BaseContact heading_text="Contact Details" button_text="Edit" rootStyle="contact-wrapper-1" ContactHandler={showContactHandler} />
+  )
 };
+
+// document.getElementById("outlined-required").setAttribute("readonly", "true");
 
 export { ShowContact };

@@ -1,19 +1,17 @@
 import "./App.css";
-import { AddContact } from "./components/addContact/AddContact";
 import { LoginPage } from "./components/loginPage/LoginPage";
 import { MainContent } from "./components/mainContent/MainContent";
-import Navbar from "./components/navbar/Navbar";
 import { RegisterPage } from "./components/registerPage/RegisterPage";
 import {
   BrowserRouter,
-  Link,
-  Switch,
+  // Link,
+  // Switch,
   Route,
   Routes,
-  useNavigate,
+  // useNavigate,
 } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setSessionToken } from "./redux/sessionToken";
+// import { useSelector, useDispatch } from "react-redux";
+// import { setSessionToken } from "./redux/sessionToken";
 import { useEffect } from "react";
 import { ApiManager } from "./api/Index";
 // save token in local storage
@@ -22,10 +20,9 @@ import { ApiManager } from "./api/Index";
 function App() {
   useEffect(() => {
     localStorage.getItem("sessionToken");
-    console.log("Calling GetContacts");
     console.log(localStorage.getItem("sessionToken"));
-    const a = new ApiManager();
-    a.getContacts().then((res) => console.log(res));
+    const apiManager = new ApiManager();
+    apiManager.getContacts().then((res) => console.log(res));
   }, []);
 
   return (

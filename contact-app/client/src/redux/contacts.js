@@ -8,7 +8,7 @@ export const contactsSlice = createSlice({
   initialState,
   reducers: {
     setContacts: (state, action) => {
-      state.token = action.payload;
+      state.contacts = action.payload;
     },
   },
 });

@@ -6,12 +6,13 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ApiManager } from "../../api/Index";
 import { useEffect } from "react";
+
 const LoginPage = function () {
   let navigate = useNavigate();
 
   useEffect(() => {
     const sessionToken = localStorage.getItem("sessionToken");
-    if (sessionToken) {
+    if (sessionToken) { // TODO: check if sessionToken is valid
       console.log("Session Token Found at login sending to home");
       navigate("/", { replace: true });
     } else {

@@ -1,27 +1,32 @@
 import { Avatar, IconButton } from "@mui/material";
 import React from "react";
 
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setMenu } from "../../redux/menu";
 import { useDispatch } from "react-redux";
 
-// import IconButton from "@mui/material/IconButton";
-
 import "./Contact.css";
+import { setSelectedContact } from "../../redux/selectedContact";
 
-const Contact = () => {
+const Contact = (props) => {
   const dispatch = useDispatch();
   return (
     <div
       className="contact-box"
-      onClick={() => dispatch(setMenu("ShowContact"))}
+      onClick={() => {
+        dispatch(setSelectedContact(props.contact));
+        dispatch(setMenu("")); // TODO: Find a better way to do this
+        dispatch(setMenu("ShowContact"));
+      }}
     >
       <div className="contact-avatar">
-        <Avatar {...stringAvatar("Test Name")} />
+        <Avatar {...stringAvatar(props.contact.name)} />
       </div>
-      <div className="contact-name">Test Name</div>
+      <div className="contact-text">
+        <div className="contact-name">{props.contact.name}</div>
+        <div className="contact-number">{props.contact.contact}</div>
+      </div>
       <div className="contact-edit">
         <IconButton
           onClick={() => {
@@ -66,6 +71,6 @@ function stringAvatar(name) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    children: `${name.split(" ")[0][0]}`, // TODO: This will only print one letter. What is empty name?
   };
 }

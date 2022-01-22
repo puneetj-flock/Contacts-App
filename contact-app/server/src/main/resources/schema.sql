@@ -9,10 +9,10 @@ CREATE TABLE Users (
 CREATE TABLE Contacts (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
-  contact VARCHAR(15),
-  name VARCHAR(255),
-  email VARCHAR(255),
-  address VARCHAR(255),
+  contact VARCHAR(15) DEFAULT "",
+  name VARCHAR(255) DEFAULT "",
+  email VARCHAR(255) DEFAULT "",
+  address VARCHAR(255) DEFAULT "",
   score INT DEFAULT 1000000,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES Users(id)
