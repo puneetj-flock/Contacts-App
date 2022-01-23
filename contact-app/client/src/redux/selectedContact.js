@@ -15,6 +15,7 @@ export const selectedContactSlice = createSlice({
   initialState,
   reducers: {
     setSelectedContact: (state, action) => {
+      console.log("CLICK");
       state.selectedContact = action.payload;
     },
   },

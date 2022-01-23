@@ -48,7 +48,10 @@ const MainContent = () => {
     const apiManager = new ApiManager();
     apiManager.getContacts().then((res) => {
       dispatch(setContacts(res));
-    });
+    }).catch((err) => {
+      localStorage.removeItem("sessionToken");
+      navigate("/login", { replace: true });
+    })
   }, [dispatch]);
 
   return (

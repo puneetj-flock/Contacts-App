@@ -1,6 +1,7 @@
 import { Avatar, IconButton } from "@mui/material";
 import React from "react";
 
+import { ApiManager } from "../../api/Index";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setMenu } from "../../redux/menu";
@@ -8,28 +9,39 @@ import { useDispatch } from "react-redux";
 
 import "./Contact.css";
 import { setSelectedContact } from "../../redux/selectedContact";
+import { emptyContact } from "../mainContent/MainContent";
 
 const Contact = (props) => {
   const dispatch = useDispatch();
+  const showContact = () => {
+    dispatch(setSelectedContact(props.contact));
+    dispatch(setMenu("")); // TODO: Find a better way to do this
+    dispatch(setMenu("ShowContact"));
+  };
+  const deleteContact = () => {
+    console.log("Delete contact");
+    // alert("Delete contact");
+    const apiManager = new ApiManager();
+    apiManager.deleteContact(props.contact.id);
+    dispatch(setSelectedContact(emptyContact));
+    dispatch(setMenu(""));
+  }
   return (
     <div
       className="contact-box"
-      onClick={() => {
-        dispatch(setSelectedContact(props.contact));
-        dispatch(setMenu("")); // TODO: Find a better way to do this
-        dispatch(setMenu("ShowContact"));
-      }}
     >
-      <div className="contact-avatar">
+      <div className="contact-avatar" onClick={showContact}>
         <Avatar {...stringAvatar(props.contact.name)} />
       </div>
-      <div className="contact-text">
+      <div className="contact-text" onClick={showContact}>
         <div className="contact-name">{props.contact.name}</div>
         <div className="contact-number">{props.contact.contact}</div>
       </div>
       <div className="contact-edit">
         <IconButton
           onClick={() => {
+            dispatch(setSelectedContact(props.contact));
+            // dispatch(setMenu("showContact"));
             dispatch(setMenu("EditContact"));
           }}
         >
@@ -37,7 +49,8 @@ const Contact = (props) => {
         </IconButton>
       </div>
       <div className="contact-delete">
-        <IconButton>
+        <IconButton
+          onClick={deleteContact}>
           <DeleteIcon />
         </IconButton>
       </div>

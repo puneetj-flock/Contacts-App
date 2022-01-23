@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./RegisterPage.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { registerUser } from "../../api/Index";
-import { REGISTER_USER } from "../../api/contants";
+import { REGISTER_USER } from "../../api/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setSessionToken } from "../../redux/sessionToken";
 import { useNavigate } from "react-router-dom";
@@ -56,15 +56,16 @@ const RegisterPage = function () {
     }
   };
   return (
-    <div className="registerpage-wrapper">
-      <div className="registerpage-body">
-        <div className="registerpage-header">
-          <h2>Register</h2>
-        </div>
-        <div className="registerpage-form">
+    <Box className="registerpage-wrapper">
+      <Box className="registerpage-body">
+        <Box className="registerpage-header">
+          <Typography>Register</Typography>
+        </Box>
+        <Box className="registerpage-form">
           {/* <form method="POST"> */}
-          <div className="registerpage-form-body">
+          <Box className="registerpage-form-body">
             <TextField
+              margin="5px"
               required
               id="outlined-required"
               label="Name"
@@ -90,14 +91,14 @@ const RegisterPage = function () {
               // defaultValue="Password"
               onChange={changeHandler("password")}
             />
-            <Button type="submit" variant="contained" onClick={clickHandler}>
+            <Button id="register-botton" type="submit" variant="contained" onClick={clickHandler}>
               Register
             </Button>
-          </div>
+          </Box>
           {/* </form> */}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

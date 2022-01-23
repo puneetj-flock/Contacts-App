@@ -19,6 +19,10 @@ public class AuthService {
         return session_token;
     }
 
+    public int checkAuth(String sessionToken) {
+        return authDB.checkAuth(sessionToken);
+    }
+
     public String login(User user) {
         user = authDB.login(user);
         return createNewSession(user);

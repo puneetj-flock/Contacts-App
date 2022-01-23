@@ -40,7 +40,7 @@ public class ContactsController {
         contactsService.updateContact(sessionToken, contact);
     }
 
-    @DeleteMapping("/deleteContact/")
+    @DeleteMapping("/deleteContact")
     public void deleteContact(@RequestHeader(value = "sessionToken") String sessionToken,
             @RequestParam(value = "id") int contactId) {
         contactsService.deleteContact(sessionToken, contactId);

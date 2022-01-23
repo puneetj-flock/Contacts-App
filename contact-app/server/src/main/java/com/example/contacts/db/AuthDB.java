@@ -37,12 +37,12 @@ public class AuthDB {
         } catch (EmptyResultDataAccessException e) {
             System.out.println(e);
             System.out.println("Session Not Found");
-            throw new ResponseStatusException(NOT_FOUND);
+            throw new ResponseStatusException(UNAUTHORIZED);
         }
         if (session.getExpiryTime().getTime() < current_time.getTime()) {
             logout(sessionToken);
             System.out.println("TIME EXPIRED\n");
-            throw new ResponseStatusException(NOT_FOUND); // redirect to login
+            throw new ResponseStatusException(UNAUTHORIZED); // redirect to login
         }
         return session.getUserId();
     }

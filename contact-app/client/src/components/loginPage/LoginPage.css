@@ -1,26 +1,62 @@
+.authpage-wrapper {
+  display: flex;
+
+  background-color: rgb(244, 245, 245);
+  /* justify-content: center; */
+  width: 100%;
+  /* align-items: center; */
+  /* height: 100vh; */
+
+}
+
 .loginpage-wrapper {
   display: flex;
-  background-color: #fff;
+  flex: 1;
+  /* background-color: #fff; */
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100vh;
+  /* width: 100%; */
+  /* height: 100vh; */
 }
+
 .loginpage-body {
+  display: flex;
+  flex-direction: column;
   width: 325px;
   height: 550px;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  background-color: aqua;
+  background-color: rgb(115, 236, 170);
+  border: 1px solid black;
 }
+
 .loginpage-header {
-  margin: 20px 80px;
+  margin: 20px 40px;
 }
+
+.loginpage-form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .loginpage-form-body {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 90%;
+}
+
+.loginpage-form button {
+  font-size: 16px;
+  padding: 5px 15px;
+  margin-top: 10px;
+  width: 40%;
+  align-self: center;
+
+  /* outline: none;
+  border: none; */
+  cursor: pointer;
 }
 
 /* .loginpage-form input {
@@ -32,12 +68,74 @@
   border: 1px solid grey;
   margin-bottom: 20px;
 }
+*/
+.registerpage-wrapper {
+  display: flex;
+  flex: 1;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%;
+  height: 100vh; */
+}
 
-.loginpage-form button {
-  font-size: 20px;
+.registerpage-body {
+  display: flex;
+  flex-direction: column;
+  width: 325px;
+  height: 550px;
+  border-radius: 20px;
+  background-color: aqua;
+  border: 1px solid black;
+}
+
+.registerpage-header {
+  margin: 20px 80px;
+}
+
+.registerpage-form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.registerpage-form-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.registerpage-form button {
+  font-size: 16px;
   padding: 5px 15px;
+  margin-top: 10px;
+  width: 40%;
+  /* border-radius: 25px; */
+  /* outline: none; */
+  /* border: none; */
+  cursor: pointer;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+  /* border-radius: 25px; */
+  /* outline: none; */
+  /* border: none; */
+  cursor: pointer;
+}
+
+/* #outlined-required {
+  margin: 5px;
+} */
+
+/* .registerpage-form input {
   border-radius: 25px;
   outline: none;
-  border: none;
-  cursor: pointer;
+  height: 40px;
+  width: 90%;
+  padding: 5px;
+  border: 1px solid grey;
+  margin: 5px;
 } */

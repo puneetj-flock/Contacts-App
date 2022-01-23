@@ -1,12 +1,12 @@
 import {
   ADD_CONTACT,
-  DELETE_CONTACTS,
+  DELETE_CONTACT,
   GET_CONTACTS,
   LOGIN_USER,
   LOGOUT_USER,
   REGISTER_USER,
   UPDATE_CONTACT,
-} from "./contants";
+} from "./constants";
 // const sessionToken = useSelector((state) => state.sessionToken.token);
 
 export class ApiManager {
@@ -40,9 +40,7 @@ export class ApiManager {
     });
     if (data_1.status === 402) {
       throw new Error("Token Expired");
-    } else {
-      return data_1.json();
-    }
+    } // TODO: return contact id and update contact
   }
 
   async updateContact(contact) {
@@ -68,17 +66,20 @@ export class ApiManager {
   // }
 
   async deleteContact(contactId) {
-    const data = await fetch(DELETE_CONTACTS + "/" + toString(contactId), {
+    console.log("contactId");
+    console.log(contactId);
+    var formData = new FormData();
+    formData.append("id", "" + contactId);
+    console.log(formData);
+    var myHeaders = new Headers();
+    myHeaders.append("sessionToken", this.sessionToken);
+    const data = await fetch(DELETE_CONTACT, {
       method: "DELETE",
-      headers: {
-        sessionToken: this.sessionToken,
-        "Content-Type": "application/json",
-      },
+      headers: myHeaders,
+      body: formData,
     });
-    if (data.status === 402) {
+    if (data.status === 401) {
       throw new Error("Token Expired");
-    } else {
-      return data.json();
     }
   }
 
@@ -90,7 +91,7 @@ export class ApiManager {
       },
       body: JSON.stringify(user),
     });
-    if (data.status === 402) {
+    if (data.status === 401) {
       throw new Error("Token Expired");
     } else {
       return data.text();
@@ -105,7 +106,7 @@ export class ApiManager {
       },
       body: JSON.stringify(user),
     }).then((data) => {
-      if (data.status === 402) {
+      if (data.status === 401) {
         throw new Error("Token Expired");
       } else {
         return data.text();
@@ -121,7 +122,7 @@ export class ApiManager {
         "Content-Type": "application/json",
       },
     });
-    if (data.status === 402) {
+    if (data.status === 401) {
       throw new Error("Token Expired");
     }
   }

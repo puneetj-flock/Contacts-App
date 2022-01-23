@@ -3,6 +3,10 @@ import { Contact } from "../contact/Contact";
 import { useSelector, useDispatch } from "react-redux";
 
 import "./ContactList.css";
+import { ApiManager } from "../../api/Index";
+import { setSelectedContact } from "../../redux/selectedContact";
+import { setMenu } from "../../redux/menu";
+import { emptyContact } from "../mainContent/MainContent";
 
 const ContactList = () => {
   const allContacts = useSelector((state) => state.contacts.contacts);
@@ -20,7 +24,11 @@ const ContactList = () => {
       contactsToDisplay.push(allContacts[index]);
     }
   }
-  contactsToDisplay.sort(function (a, b) { return a["name"] > b["name"] });
+  contactsToDisplay.sort(function (a, b) { return a["name"].toLowerCase() > b["name"].toLowerCase() });
+
+  // const apiManager = new ApiManager();
+  // const dispatch = useDispatch();
+
   return (
     <div className="contact-list">{contactsToDisplay.map(contact => {
       return (<Contact key={contact.id} contact={contact} />) // TODO: alternate shading for contacts

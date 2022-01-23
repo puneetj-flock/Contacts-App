@@ -29,6 +29,11 @@ public class AuthController {
         authService.logout(sessionToken);
     }
 
+    @GetMapping("/checkAuth")
+    public int checkAuth(@RequestHeader(value = "sessionToken") String sessionToken) {
+        return authService.checkAuth(sessionToken);
+    }
+
     @GetMapping("/welcome")
     public String hello() {
         return "Welcome";

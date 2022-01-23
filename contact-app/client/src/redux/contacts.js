@@ -10,6 +10,11 @@ export const contactsSlice = createSlice({
     setContacts: (state, action) => {
       state.contacts = action.payload;
     },
+    // [... state.contacts, action.payload]: (state, action) => {
+    // addContact: (state, action) => {
+    //   state.contacts.push(action.payload);
+    // } 
+    // setUpdatedContact: (state, action)
   },
 });
 
