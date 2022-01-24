@@ -73,11 +73,11 @@ const MainContent = () => {
       <Navbar />
       <div className="body-wrapper">
         <Sidebar />
-        <div className="main-wrapper"></div>
-        <Menu />
-      </div>
+        <div className="main-wrapper">
+          <Menu />
+        </div>
 
-      {/* <Fab
+        {/* <Fab
           aria-label="add"
           style={logoutFabStyle}
           title="Logut"
@@ -85,6 +85,7 @@ const MainContent = () => {
         >
           <LogoutIcon />
         </Fab> */}
+      </div>
     </>
   );
 };
