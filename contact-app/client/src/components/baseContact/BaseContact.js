@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedContact } from "../../redux/selectedContact";
 
 import "./BaseContact.css";
 import { grey } from "@mui/material/colors";
 
 const BaseContact = (props) => {
-  const [contact, setContact] = useState(useSelector((state) => state.selectedContact.selectedContact));
+  const dispatch = useDispatch();
+  const contact = useSelector((state) => state.selectedContact.selectedContact);
 
   const validateEmail = (email) => {
     return true;
@@ -21,7 +23,9 @@ const BaseContact = (props) => {
 
   const changeHandler = (prop) => {
     return (event) => {
-      setContact({ ...contact, [prop]: event.target.value });
+      if (props.button_text !== "Edit")  {
+        dispatch(setSelectedContact({ ...contact, [prop]: event.target.value }));
+      }
     };
   };
 

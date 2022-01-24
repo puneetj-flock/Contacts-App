@@ -1,10 +1,12 @@
 import React from "react";
 
-import { ApiManager } from "../../api/Index";
+import { ApiManager } from "../../api/APIManager";
 import { BaseContact } from "../baseContact/BaseContact";
 import { setMenu } from "../../redux/menu";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updateContact } from "../../redux/contacts";
+import { ContactService } from "../../service/ContactService";
 
 // import "./EditContact.css";
 
@@ -13,14 +15,13 @@ const EditContact = () => {
   const navigate = useNavigate();
 
   const editContactHandler = contact => {
-    const apiManager = new ApiManager();
-    apiManager.updateContact(contact); //TODO: update contact in redux
+    ContactService.updateContact(contact);
+    dispatch(updateContact(contact));
     dispatch(setMenu("showContact"));
-    navigate("/login"); // TODO: Find a better way to do this
     // dispatch(setSelectedContact(emptyContact));
   };
   return (
-    <BaseContact heading_text="Edit Contact" button_text="Save" rootStyle="contact-wrapper-2" ContactHandler={editContactHandler}/>
+    <BaseContact heading_text="Edit Contact" button_text="Update" rootStyle="contact-wrapper-edit" ContactHandler={editContactHandler}/>
   )
 };
 

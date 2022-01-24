@@ -2,6 +2,7 @@ import "./App.css";
 import { LoginPage } from "./components/loginPage/LoginPage";
 import { MainContent } from "./components/mainContent/MainContent";
 import { RegisterPage } from "./components/registerPage/RegisterPage";
+import { ContactService } from "./service/ContactService";
 import {
   BrowserRouter,
   // Link,
@@ -13,17 +14,15 @@ import {
 // import { useSelector, useDispatch } from "react-redux";
 // import { setSessionToken } from "./redux/sessionToken";
 import { useEffect } from "react";
-import { ApiManager } from "./api/Index";
 // save token in local storage
 // use state take token
 
 function App() {
-  useEffect(() => {
-    localStorage.getItem("sessionToken");
-    console.log(localStorage.getItem("sessionToken"));
-    const apiManager = new ApiManager();
-    apiManager.getContacts().then((res) => console.log(res));
-  }, []);
+  // useEffect(() => {
+  //   localStorage.getItem("sessionToken");
+  //   console.log(localStorage.getItem("sessionToken"));
+  //   ContactService.getContacts().then((res) => console.log(res));
+  // }, []); // TODO: Found Bug: useEffect is called twice
 
   return (
     <div className="App">

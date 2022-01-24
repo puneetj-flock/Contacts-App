@@ -3,13 +3,10 @@ import "./RegisterPage.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
-import { registerUser } from "../../api/Index";
-import { REGISTER_USER } from "../../api/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { setSessionToken } from "../../redux/sessionToken";
 import { useNavigate } from "react-router-dom";
-import { ApiManager } from "../../api/Index";
 import { useEffect } from "react";
+import { AuthService } from "../../service/AuthService";
 // setRegisterError({ ...registerError, [prop]: null });
 
 const RegisterPage = function () {
@@ -46,8 +43,7 @@ const RegisterPage = function () {
 
   const clickHandler = () => {
     if (validateEmail(registerInfo.email) && registerInfo.password !== "") {
-      const apiManager = new ApiManager();
-      apiManager.registerUser(registerInfo).then((res) => {
+      AuthService.registerUser(registerInfo).then((res) => {
         localStorage.setItem("sessionToken", res);
         navigate("/");
       });
@@ -59,14 +55,14 @@ const RegisterPage = function () {
     <Box className="registerpage-wrapper">
       <Box className="registerpage-body">
         <Box className="registerpage-header">
-          <Typography>Register</Typography>
+          <Typography variant="h5">New User! Register Here</Typography>
         </Box>
         <Box className="registerpage-form">
           {/* <form method="POST"> */}
           <Box className="registerpage-form-body">
             <TextField
-              margin="5px"
               required
+              margin="normal"
               id="outlined-required"
               label="Name"
               // placeholder="Name"
@@ -76,6 +72,7 @@ const RegisterPage = function () {
 
             <TextField
               required
+              margin="normal"
               id="outlined-required"
               label="Email"
               // placeholder="Email Id"
@@ -84,6 +81,7 @@ const RegisterPage = function () {
             />
             <TextField
               required
+              margin="normal"
               id="outlined-required"
               label="Password"
               type="password"

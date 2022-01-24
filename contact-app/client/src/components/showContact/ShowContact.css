@@ -10,3 +10,10 @@
     display: none !important;
     visibility: hidden;
 } */
+
+.contact-wrapper-show{
+  background-color: rgb(233, 235, 227);
+  width: 60%;
+  padding: 15px;
+  border-radius: 3px;
+}

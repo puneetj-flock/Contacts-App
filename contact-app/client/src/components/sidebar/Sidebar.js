@@ -18,7 +18,7 @@ const Sidebar = () => {
       <div className="navbar">
         <div className="add-contact">
 
-          <Fab color="primary" aria-label="add" onClick={() => {
+          <Fab color="primary" aria-label="add" title="Add Contact" onClick={() => {
             dispatch(setSelectedContact(emptyContact))
             dispatch(setMenu("AddContact"));
           }}>

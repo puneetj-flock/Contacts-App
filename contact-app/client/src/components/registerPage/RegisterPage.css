@@ -1,0 +1,56 @@
+.registerpage-wrapper {
+  display: flex;
+  flex: 1;
+  background-color: rgb(121, 117, 117);
+  justify-content: center;
+  align-items: center;
+  /* width: 100%;
+  height: 100vh; */
+}
+
+.registerpage-body {
+  display: flex;
+  flex-direction: column;
+  width: 325px;
+  height: 550px;
+  border-radius: 20px;
+  background-color: rgb(115, 236, 170);
+  border: 1px solid black;
+}
+
+.registerpage-header {
+  margin: 20px 80px;
+}
+
+.registerpage-form {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.registerpage-form-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.registerpage-form button {
+  font-size: 16px;
+  padding: 5px 15px;
+  margin-top: 10px;
+  width: 40%;
+  /* border-radius: 25px; */
+  /* outline: none; */
+  /* border: none; */
+  cursor: pointer;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+  /* border-radius: 25px; */
+  /* outline: none; */
+  /* border: none; */
+  cursor: pointer;
+}

@@ -1,31 +1,42 @@
 import { Avatar, IconButton } from "@mui/material";
 import React from "react";
 
-import { ApiManager } from "../../api/Index";
+import { ApiManager } from "../../api/APIManager";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { setMenu } from "../../redux/menu";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Contact.css";
 import { setSelectedContact } from "../../redux/selectedContact";
 import { emptyContact } from "../mainContent/MainContent";
+import { updateContact, deleteStoreContact } from "../../redux/contacts";
+import { ContactService } from "../../service/ContactService";
 
 const Contact = (props) => {
   const dispatch = useDispatch();
+
   const showContact = () => {
-    dispatch(setSelectedContact(props.contact));
-    dispatch(setMenu("")); // TODO: Find a better way to do this
+    const score = "score";
+    let updatedScoreContact = { ...props.contact, [score]: props.contact.score + 1 };
+    dispatch(setSelectedContact(updatedScoreContact));
+    ContactService.updateContact(updatedScoreContact);
+    dispatch(updateContact(updatedScoreContact));
+    // TODO: Update the score in the redux store allContacts
     dispatch(setMenu("ShowContact"));
   };
+
   const deleteContact = () => {
-    console.log("Delete contact");
-    // alert("Delete contact");
-    const apiManager = new ApiManager();
-    apiManager.deleteContact(props.contact.id);
-    dispatch(setSelectedContact(emptyContact));
-    dispatch(setMenu(""));
+    let confirmDelete = window.confirm("Are you sure you want to delete this contact?");
+    if (confirmDelete) {
+      ContactService.deleteContact(props.contact.id);
+      dispatch(deleteStoreContact(props.contact.id));
+      dispatch(setMenu(""));
+      dispatch(setSelectedContact(emptyContact));
+    }
+    // TODO: Remove contact from the redux store allContacts
   }
+
   return (
     <div
       className="contact-box"
@@ -38,10 +49,9 @@ const Contact = (props) => {
         <div className="contact-number">{props.contact.contact}</div>
       </div>
       <div className="contact-edit">
-        <IconButton
+        <IconButton title="Edit Contact"
           onClick={() => {
             dispatch(setSelectedContact(props.contact));
-            // dispatch(setMenu("showContact"));
             dispatch(setMenu("EditContact"));
           }}
         >
@@ -49,7 +59,7 @@ const Contact = (props) => {
         </IconButton>
       </div>
       <div className="contact-delete">
-        <IconButton
+        <IconButton title="Delete Contact"
           onClick={deleteContact}>
           <DeleteIcon />
         </IconButton>

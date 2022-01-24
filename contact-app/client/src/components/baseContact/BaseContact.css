@@ -6,29 +6,27 @@
   /* padding: 10px; */
 }
 
-
-
 #base-contact-button {
+  font-size: 18px;
   margin-top: 10px;
-  padding: 10px;
-  background-color: #b7c4b8;
+  padding: 5px;
+  background-color: #8ea38e;
   border-radius: 3px;
+  width: 20%;
 }
 
-.contact-wrapper-1{
-  /* background-color: rgb(233, 235, 227); */
+#base-contact-button:hover {
+  background-color: #887a77;
+}
+
+.contact-wrapper-add{
+  background-color: rgb(233, 235, 227);
   padding: 15px;
   border-radius: 3px;
 }
 
-.contact-wrapper-2{
-  /* background-color: rgb(233, 235, 227); */
-  padding: 15px;
-  border-radius: 3px;
-}
-
-.contact-wrapper-3{
-  /* background-color: rgb(233, 235, 227); */
+.contact-wrapper-edit{
+  background-color: rgb(233, 235, 227);
   padding: 15px;
   border-radius: 3px;
 }

@@ -10,13 +10,16 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import "./MainContent.css";
 
 import { setContacts } from "../../redux/contacts";
-import { ApiManager } from "../../api/Index";
+import { ApiManager } from "../../api/APIManager";
 import { useNavigate } from "react-router-dom";
+import { ContactService } from "../../service/ContactService";
+import { AuthService } from "../../service/AuthService";
 
-const fabStyle = {
+const logoutFabStyle = {
   margin: 0,
   bottom: 'auto',
   // color: "#ff0000",
+  backgroundColor: "#da5757",
   right: 20,
   top: 20,
   left: 'auto',
@@ -45,28 +48,39 @@ const MainContent = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const apiManager = new ApiManager();
-    apiManager.getContacts().then((res) => {
-      dispatch(setContacts(res));
-    }).catch((err) => {
+    console.log("MainContent");
+    AuthService.checkAuth().then((res) => {
+      console.log("MainContent: checkAuth", res);
+      if (res) {
+        ContactService.getContacts().then((res) => {
+          dispatch(setContacts(res));
+        });
+      } else {
+        navigate("/login", { replace: true });
+      }
+    });
+  }, []);
+
+  const logoutHandler = () => {
+    let confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      AuthService.logoutUser();
       localStorage.removeItem("sessionToken");
       navigate("/login", { replace: true });
-    })
-  }, [dispatch]);
+    }
+  };
 
   return (
     <div className="body-wrapper">
       <Sidebar />
       <div className="main-wrapper">
+        <div className="welcome_banner">
+          <h1>Hi! User</h1>
+        </div>
         <Menu />
       </div>
 
-      <Fab aria-label="add" style={fabStyle} onClick={() => {
-        const apiManager = new ApiManager();
-        apiManager.logoutUser();
-        localStorage.removeItem("sessionToken");
-        navigate("/login");
-      }}>
+      <Fab aria-label="add" style={logoutFabStyle} title="Logut" onClick={logoutHandler}>
         <LogoutIcon />
       </Fab>
     </div>
