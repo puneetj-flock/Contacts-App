@@ -1,8 +1,6 @@
 package com.example.contacts.utils;
 
-import com.example.contacts.model.ContactDetails;
-import com.example.contacts.model.Sessions;
-import com.example.contacts.model.User;
+import com.example.contacts.model.*;
 import org.springframework.jdbc.core.RowMapper;
 
 public class ObjectRowMapper {
@@ -27,11 +25,20 @@ public class ObjectRowMapper {
     return contact;
   };
 
-  public static RowMapper<Sessions> SessionObjectRowMapper = (rs, rowNum) -> {
-    Sessions sessionObject = new Sessions();
-    sessionObject.setUserId(rs.getInt("user_id"));
-    sessionObject.setToken(rs.getString("session_token"));
-    sessionObject.setExpiryTime(rs.getTimestamp("expiry_time"));
-    return sessionObject;
+  public static RowMapper<Sessions> SessionRowMapper = (rs, rowNum) -> {
+    Sessions session = new Sessions();
+    session.setUserId(rs.getInt("user_id"));
+    session.setSessionToken(rs.getString("session_token"));
+    session.setExpiryTime(rs.getTimestamp("expiry_time"));
+    return session;
+  };
+
+  public static RowMapper<SessionData> SessionDataRowMapper = (rs, rowNum) -> {
+    SessionData sessionData = new SessionData();
+    sessionData.setSessionToken(rs.getString("session_token"));
+    sessionData.setUserId(rs.getInt("user_id"));
+    sessionData.setName(rs.getString("name"));
+    sessionData.setEmail(rs.getString("email"));
+    return sessionData;
   };
 }

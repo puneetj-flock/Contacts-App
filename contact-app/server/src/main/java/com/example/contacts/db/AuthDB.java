@@ -1,7 +1,9 @@
 package com.example.contacts.db;
 
+import com.example.contacts.model.SessionData;
 import com.example.contacts.model.Sessions;
 import com.example.contacts.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -20,7 +22,7 @@ import static com.example.contacts.utils.DBConstants.AuthQueries.SESSION_SELECT;
 import static com.example.contacts.utils.DBConstants.AuthQueries.USER_REGISTER;
 import static com.example.contacts.utils.DBConstants.Constants.TIME_1_DAY;
 import static com.example.contacts.utils.DBConstants.ContactsQueries.*;
-import static com.example.contacts.utils.ObjectRowMapper.SessionObjectRowMapper;
+import static com.example.contacts.utils.ObjectRowMapper.SessionRowMapper;
 import static com.example.contacts.utils.ObjectRowMapper.UserRowMapper;
 import static org.springframework.http.HttpStatus.*;
 
@@ -28,16 +30,20 @@ import static org.springframework.http.HttpStatus.*;
 public class AuthDB {
 
   @Autowired
-  NamedParameterJdbcTemplate jdbcTemplate;
+  private NamedParameterJdbcTemplate jdbcTemplate;
 
-  public Integer checkAuth(String Authorization) {
+  public SessionData checkAuth(String Authorization) {
 //        System.out.println(Authorization);
     Timestamp current_time = Timestamp.from(Instant.now());
     Map<String, Object> sourceParams = new HashMap<>();
     sourceParams.put("session_token", Authorization);
+    User user = new User();
     Sessions session;
+    SessionData sessionData = new SessionData();
     try {
-      session = jdbcTemplate.queryForObject(SESSION_SELECT, sourceParams, SessionObjectRowMapper);
+      session = jdbcTemplate.queryForObject(SESSION_SELECT, sourceParams, SessionRowMapper);
+      sourceParams.put("id", session.getUserId());
+      user = jdbcTemplate.queryForObject(USER_SELECT_WHERE_ID, sourceParams, UserRowMapper);
     } catch (EmptyResultDataAccessException e) {
       throw new ResponseStatusException(UNAUTHORIZED);
     }
@@ -46,7 +52,11 @@ public class AuthDB {
       System.out.println("TIME EXPIRED\n");
       throw new ResponseStatusException(UNAUTHORIZED);
     }
-    return session.getUserId();
+    sessionData.setSessionToken(session.getSessionToken());
+    sessionData.setUserId(user.getId());
+    sessionData.setName(user.getName());
+    sessionData.setEmail(user.getEmail());
+    return sessionData;
   }
 
 //  public boolean validateEmail(String email) {

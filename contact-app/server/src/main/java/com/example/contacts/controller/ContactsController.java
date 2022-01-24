@@ -29,10 +29,10 @@ public class ContactsController {
   }
 
   @PostMapping("/add")
-  public void addContact(@RequestAttribute Integer userId,
+  public ContactDetails addContact(@RequestAttribute Integer userId,
                          @RequestBody ContactDetails contact) {
     System.out.println("Reached here with userId " + userId);
-    contactsService.addContact(userId, contact);
+    return contactsService.addContact(userId, contact);
   }
 
   @PutMapping("/update")

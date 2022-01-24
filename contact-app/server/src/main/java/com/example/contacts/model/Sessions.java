@@ -12,11 +12,11 @@ public class Sessions {
   @SerializedName("expiry_time")
   private Timestamp expiryTime;
 
-  public String getToken() {
+  public String getSessionToken() {
     return sessionToken;
   }
 
-  public void setToken(String sessionToken) {
+  public void setSessionToken(String sessionToken) {
     this.sessionToken = sessionToken;
   }
 

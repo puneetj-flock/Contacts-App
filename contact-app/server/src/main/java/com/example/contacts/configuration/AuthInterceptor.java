@@ -12,7 +12,7 @@ import java.util.Objects;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
   @Autowired
-  AuthDB auth;
+  private AuthDB authDB;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -25,7 +25,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     System.out.println("Call Intercepted with " + sessionToken + "\n");
 
 
-    Integer userId = auth.checkAuth(sessionToken);
+    Integer userId = authDB.checkAuth(sessionToken).getUserId();
     System.out.println(sessionToken + " " + userId);
 
     if (userId == null) {

@@ -27,6 +27,7 @@ public interface DBConstants {
 
     String SESSION_INSERT = "INSERT INTO sessions(session_token, user_id, expiry_time) VALUES(:session_token, :user_id, :expiry_time)";
     String USER_SELECT = "SELECT * FROM users WHERE email=:email AND password=:password LIMIT 1";
+    String USER_SELECT_WHERE_ID = "SELECT * FROM users WHERE id=:id LIMIT 1";
     String SESSION_DELETE = "DELETE from sessions WHERE session_token=:session_token";
     String CONTACT_INSERT = "INSERT INTO contacts(user_id, name, contact, address, email, score)  VALUES(:userId, :name, :contact, :address, :email, :score)";
     String CONTACT_SELECT = "SELECT * FROM contacts WHERE user_id=:user_id";

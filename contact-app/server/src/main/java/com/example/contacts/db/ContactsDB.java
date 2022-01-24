@@ -4,6 +4,8 @@ import com.example.contacts.model.ContactDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -17,7 +19,7 @@ import static com.example.contacts.utils.ObjectRowMapper.ContactDetailsRowMapper
 public class ContactsDB {
 
   @Autowired
-  NamedParameterJdbcTemplate jdbcTemplate;
+  private NamedParameterJdbcTemplate jdbcTemplate;
 
   public List<ContactDetails> getContacts(Integer userId) {
     Map<String, Object> params = new HashMap<>();
@@ -25,13 +27,12 @@ public class ContactsDB {
     return jdbcTemplate.query(CONTACT_SELECT, params, ContactDetailsRowMapper);
   }
 
-  public void addContact(ContactDetails contact) {
-    System.out.println("Contact Added here \n");
-    System.out.println(contact);
+  public ContactDetails addContact(ContactDetails contact) {
     BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(contact);
-    System.out.println(paramSource);
-    int c = jdbcTemplate.update(CONTACT_INSERT, paramSource);
-
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    jdbcTemplate.update(CONTACT_INSERT, paramSource, keyHolder, new String[] { "id" });
+    contact.setId(keyHolder.getKey().intValue());
+    return contact;
   }
 
   public void updateContact(ContactDetails contact) {
