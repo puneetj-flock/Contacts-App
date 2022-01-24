@@ -26,7 +26,10 @@
   background-color: transparent;
   font-size: large;
 }
-
+.add-contact {
+  background-color: #dae6f1;
+  border-radius: 100%;
+}
 .contact-list {
   flex: 10;
   display: flex;

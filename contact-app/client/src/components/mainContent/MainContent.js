@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { AddContact } from "../addContact/AddContact";
-import { ShowContact } from "../showContact/ShowContact"; 
+import { ShowContact } from "../showContact/ShowContact";
 import { EditContact } from "../editContact/EditContact";
 import { Sidebar } from "../sidebar/Sidebar";
+import { Navbar } from "../navbar/Navbar";
 import { useSelector, useDispatch } from "react-redux";
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import LogoutIcon from '@mui/icons-material/Logout';
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import LogoutIcon from "@mui/icons-material/Logout";
 import "./MainContent.css";
 
 import { setContacts } from "../../redux/contacts";
@@ -17,13 +18,13 @@ import { AuthService } from "../../service/AuthService";
 
 const logoutFabStyle = {
   margin: 0,
-  bottom: 'auto',
+  bottom: "auto",
   // color: "#ff0000",
   backgroundColor: "#da5757",
   right: 20,
   top: 20,
-  left: 'auto',
-  position: 'fixed',
+  left: "auto",
+  position: "fixed",
 };
 
 const emptyContact = {
@@ -71,19 +72,27 @@ const MainContent = () => {
   };
 
   return (
-    <div className="body-wrapper">
-      <Sidebar />
-      <div className="main-wrapper">
-        <div className="welcome_banner">
-          <h1>Hi! User</h1>
+    <>
+      <Navbar />
+      <div className="body-wrapper">
+        <Sidebar />
+        <div className="main-wrapper">
+          <div className="welcome_banner">
+            <h1>Hi! User</h1>
+          </div>
+          <Menu />
         </div>
-        <Menu />
-      </div>
 
-      <Fab aria-label="add" style={logoutFabStyle} title="Logut" onClick={logoutHandler}>
-        <LogoutIcon />
-      </Fab>
-    </div>
+        <Fab
+          aria-label="add"
+          style={logoutFabStyle}
+          title="Logut"
+          onClick={logoutHandler}
+        >
+          <LogoutIcon />
+        </Fab>
+      </div>
+    </>
   );
 };
 
