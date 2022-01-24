@@ -25,7 +25,6 @@ const Contact = (props) => {
     dispatch(setSelectedContact(updatedScoreContact));
     ContactService.updateContact(updatedScoreContact);
     dispatch(updateContact(updatedScoreContact));
-    // TODO: Update the score in the redux store allContacts
     dispatch(setMenu("ShowContact"));
   };
 

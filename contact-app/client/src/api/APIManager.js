@@ -8,16 +8,26 @@ export class APIManager {
     if (isJSON) {
       headers.append("Content-Type", "application/json");
     }
-    return fetch(url, {
+    console.log("url", url);
+    return await fetch(url, {
       method: method,
       headers: headers,
       body: body,
     }).then((data) => {
-      if (data.status === 200) {
-        const data_ = data.json();
-        console.log("data_", data_);
-        return data_; // TODO: Not all API return data
+      if(data.status === 400) {
+        alert("Bad Request");
+      } else if (data.status === 401) {
+        alert("Token Expired");
+      } else if (data.status === 403) {
+        alert("Forbidden");
+      } else if(data.status === 404) {
+        alert("Not Found");
+      } else if (data.status === 500) {
+        alert("Internal Server Error");
       }
+      const data_ = data.json();
+      console.log("data_", data_);
+      return data_;
     });
   }
 }

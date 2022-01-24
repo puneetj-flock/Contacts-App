@@ -11,19 +11,14 @@ const LoginPage = function () {
   let navigate = useNavigate();
 
   useEffect(() => {
-    const sessionToken = localStorage.getItem("sessionToken");
-
-    if (sessionToken) {
-      // TODO: check if sessionToken is valid
-      console.log("Session Token Found at login page");
-      AuthService.checkAuth().then((data) => {
-        if (data) {
-          navigate("/", { replace: true });
-        }
-      });
-    } else {
-      console.log("Session Token not found at login");
-    }
+    AuthService.checkAuth().then((data) => {
+      console.log("Session Token Found at login page", data);
+      if (data) {
+        navigate("/", { replace: true });
+      } else {
+        // localStorage.removeItem("sessionToken");
+      }
+    });
   }, [navigate]);
 
   const [loginInfo, setLoginInfo] = useState({
@@ -45,9 +40,9 @@ const LoginPage = function () {
 
   const handleSignIn = () => {
     if (validateEmail(loginInfo.email)) {
-      AuthService.loginUser(loginInfo)
-        .then((res) => {
-          localStorage.setItem("sessionToken", res);
+      AuthService
+        .loginUser(loginInfo)
+        .then(() => {
           navigate("/", { replace: true });
         })
         .catch((err) => {

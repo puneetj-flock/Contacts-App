@@ -17,17 +17,14 @@ const AddContact = () => {
 
   const addContactHandler = contact => {
     console.log("addContactHandler");
-    const contactId = ContactService.addContact(contact);
-    // .then(res => {
-    //   console.log(res);
-    //   contact = { ...contact, [id]: res };
-    // }); // TODO: catch
-    const id = "id";
-    contact = { ...contact, [id]: contactId };
-    console.log(contact);
-    dispatch(setSelectedContact(emptyContact));
-    dispatch(addContact(contact));
-    dispatch(setMenu(""));
+    ContactService.addContact(contact).then(res => {
+      const id = "id";
+      // contact = ;
+      // console.log(contact);
+      // dispatch(setSelectedContact(emptyContact));
+      dispatch(addContact({ ...contact, [id]: res }));
+      // dispatch(setMenu(""));
+    }); 
     // reducer in get contact
   };
   return (
