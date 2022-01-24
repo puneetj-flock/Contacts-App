@@ -16,17 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { ContactService } from "../../service/ContactService";
 import { AuthService } from "../../service/AuthService";
 
-const logoutFabStyle = {
-  margin: 0,
-  bottom: "auto",
-  // color: "#ff0000",
-  backgroundColor: "#da5757",
-  right: 20,
-  top: 20,
-  left: "auto",
-  position: "fixed",
-};
-
 const emptyContact = {
   id: 0,
   name: "",
@@ -62,36 +51,40 @@ const MainContent = () => {
     });
   }, []);
 
-  const logoutHandler = () => {
-    let confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (confirmLogout) {
-      AuthService.logoutUser();
-      localStorage.removeItem("sessionToken");
-      navigate("/login", { replace: true });
-    }
-  };
+  //for long pooling
+  setInterval(() => {
+    console.log("SetInterval called\n");
+
+    ContactService.getContacts().then((res) => {
+      dispatch(setContacts(res));
+    });
+  }, 5000);
+  // const logoutHandler = () => {
+  //   let confirmLogout = window.confirm("Are you sure you want to logout?");
+  //   if (confirmLogout) {
+  //     AuthService.logoutUser();
+  //     localStorage.removeItem("sessionToken");
+  //     navigate("/login", { replace: true });
+  //   }
+  // };
 
   return (
     <>
       <Navbar />
       <div className="body-wrapper">
         <Sidebar />
-        <div className="main-wrapper">
-          <div className="welcome_banner">
-            <h1>Hi! User</h1>
-          </div>
-          <Menu />
-        </div>
+        <div className="main-wrapper"></div>
+        <Menu />
+      </div>
 
-        <Fab
+      {/* <Fab
           aria-label="add"
           style={logoutFabStyle}
           title="Logut"
           onClick={logoutHandler}
         >
           <LogoutIcon />
-        </Fab>
-      </div>
+        </Fab> */}
     </>
   );
 };

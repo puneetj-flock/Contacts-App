@@ -1,18 +1,18 @@
 /* .authpage-wrapper {
   display: flex; */
 
-  /* background-color: rgb(244, 245, 245); */
-  /* justify-content: center; */
-  /* width: 100%; */
-  /* align-items: center; */
-  /* height: 100vh; */
+/* background-color: rgb(244, 245, 245); */
+/* justify-content: center; */
+/* width: 100%; */
+/* align-items: center; */
+/* height: 100vh; */
 
 /* } */
 
 .loginpage-wrapper {
   display: flex;
   flex: 1;
-  background-color: rgb(121, 117, 117);
+  background-color: rgb(245, 245, 245);
   justify-content: center;
   align-items: center;
   /* width: 100%; */
@@ -22,11 +22,11 @@
 .loginpage-body {
   display: flex;
   flex-direction: column;
+  padding: 25px;
   width: 325px;
   height: 550px;
   border-radius: 20px;
-  background-color: rgb(115, 236, 170);
-  border: 1px solid black;
+  background-color: #fff;
 }
 
 .loginpage-header {
@@ -59,6 +59,18 @@
   cursor: pointer;
 }
 
+.loginpage-footer {
+  margin-top: 80px;
+}
+.register-heading {
+  margin-bottom: 50px;
+}
+.css-aim61a {
+  margin-top: 50px;
+}
+.css-ag7rrr-MuiTypography-root {
+  margin-bottom: 50px;
+}
 /* .loginpage-form input {
   border-radius: 25px;
   outline: none;
@@ -69,7 +81,7 @@
   margin-bottom: 20px;
 }
 */
-.registerpage-wrapper {
+/* .registerpage-wrapper {
   display: flex;
   flex: 1;
   background-color: #fff;
@@ -77,8 +89,8 @@
   align-items: center;
   /* width: 100%;
   height: 100vh; */
-}
 
+/*
 .registerpage-body {
   display: flex;
   flex-direction: column;
@@ -113,18 +125,18 @@
   margin-top: 10px;
   width: 40%;
   /* border-radius: 25px; */
-  /* outline: none; */
-  /* border: none; */
-  cursor: pointer;
-}
-
+/* outline: none; */
+/* border: none; */
+/* cursor: pointer; */
+/* } */
+/* 
 .MuiFormControl-root {
   width: 100%;
   /* border-radius: 25px; */
-  /* outline: none; */
-  /* border: none; */
-  cursor: pointer;
-}
+/* outline: none; */
+/* border: none; */
+/* cursor: pointer; */
+/* } */
 
 /* #outlined-required {
   margin: 5px;

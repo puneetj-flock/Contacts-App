@@ -1,15 +1,20 @@
 .contact-box {
   display: flex;
   justify-content: space-evenly;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid grey;
+  /* border-bottom-width: 10px; */
+  background-color: #fff;
 }
 
-.contact-box:hover {
-  background-color: #d4cece;
+.contact-box-info {
+  display: flex;
+  width: 60%;
+  justify-content: flex-start;
 }
-
 .contact-avatar {
+  display: flex;
   flex: 1;
+  justify-content: flex-end;
   padding: 10px;
   cursor: pointer;
 }
@@ -24,16 +29,17 @@
 
 .contact-name {
   align-self: center;
-  font-size: large;
+  font-size: 20px;
 }
 
 .contact-number {
   align-self: center;
-  font-size: large;
+  font-size: 14px;
 }
 
 .contact-edit,
 .contact-delete {
+  max-width: 45px;
   flex: 1;
   align-self: center;
 }

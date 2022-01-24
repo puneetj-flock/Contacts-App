@@ -3,7 +3,21 @@ import "./Navbar.css";
 import { Avatar } from "@mui/material";
 import { ExitToAppRounded } from "@material-ui/icons";
 
+import { AuthService } from "../../service/AuthService";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    let confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (confirmLogout) {
+      AuthService.logoutUser();
+      localStorage.removeItem("sessionToken");
+      navigate("/login", { replace: true });
+    }
+  };
+
   return (
     <div className="navbar">
       <div className="navbar-left">
@@ -11,6 +25,7 @@ const Navbar = () => {
           <Avatar
             src="https://img.icons8.com/pastel-glyph/64/000000/business-contact.png"
             style={{ height: "45px", width: "45px" }}
+            // eslint-disable-next-line react/jsx-no-duplicate-props
             style={{ borderRadius: 0 }}
           />
           <p>Contacts App</p>
@@ -23,7 +38,7 @@ const Navbar = () => {
           <p> Puneet Jangid </p>
         </div>
 
-        <div className="navbar-logout">
+        <div className="navbar-logout" onClick={logoutHandler}>
           <ExitToAppRounded style={{ height: "35px", width: "35px" }} />
           <p> Logout </p>
         </div>

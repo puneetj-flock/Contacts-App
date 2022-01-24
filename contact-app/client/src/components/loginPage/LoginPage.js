@@ -13,7 +13,8 @@ const LoginPage = function () {
   useEffect(() => {
     const sessionToken = localStorage.getItem("sessionToken");
 
-    if (sessionToken) { // TODO: check if sessionToken is valid
+    if (sessionToken) {
+      // TODO: check if sessionToken is valid
       console.log("Session Token Found at login page");
       AuthService.checkAuth().then((data) => {
         if (data) {
@@ -44,8 +45,7 @@ const LoginPage = function () {
 
   const handleSignIn = () => {
     if (validateEmail(loginInfo.email)) {
-      AuthService
-        .loginUser(loginInfo)
+      AuthService.loginUser(loginInfo)
         .then((res) => {
           localStorage.setItem("sessionToken", res);
           navigate("/", { replace: true });
@@ -63,49 +63,49 @@ const LoginPage = function () {
   };
 
   return (
-      <Box className="loginpage-wrapper">
-        <Box className="loginpage-body">
-          <Box className="loginpage-header">
-            <h2>Already Registered! Login Here</h2>
-          </Box>
-          <Box className="loginpage-form">
-            <Box className="loginpage-form-body">
-              <TextField
-                required
-                margin="normal"
-                id="outlined-required"
-                label="Email"
-                // defaultValue="Email Id"
-                onChange={changeHandler("email")}
-              />
-              <TextField
-                required
-                margin="normal"
-                id="outlined-required"
-                label="Password"
-                type="password"
-                // defaultValue="Password"
-                onChange={changeHandler("password")}
-                />
-              <Button type="submit" variant="contained" onClick={handleSignIn}>
-                Sign In
-              </Button>
-                {/* <Box className="Login-user">Not a user!! Login</Box>
-                <Button variant="contained" onClick={handleRegister}>
-                  Register
-                </Button> */}
-            </Box>
+    <Box className="loginpage-wrapper">
+      <Box className="loginpage-body">
+        <Box className="loginpage-header">
+          <h2>Login</h2>
         </Box>
-        <Box className="loginpage-footer" marginTop="100px">
-          <Typography variant="h5">
-            Don't have an account?
-            <Button variant="contained" onClick={handleRegister}>
-              Register
+        <Box className="loginpage-form">
+          <Box className="loginpage-form-body">
+            <TextField
+              required
+              margin="normal"
+              id="outlined-required"
+              label="Email"
+              // defaultValue="Email Id"
+              onChange={changeHandler("email")}
+            />
+            <TextField
+              required
+              margin="normal"
+              id="outlined-required"
+              label="Password"
+              type="password"
+              // defaultValue="Password"
+              onChange={changeHandler("password")}
+            />
+            <Button type="submit" variant="contained" onClick={handleSignIn}>
+              Sign In
             </Button>
-          </Typography>
           </Box>
+        </Box>
+        <Box className="loginpage-footer">
+          <Typography
+            className="register-heading"
+            variant="h6"
+            style={{ marginBottom: "30px" }}
+          >
+            Don't have an account?
+          </Typography>
+          <Button variant="contained" onClick={handleRegister}>
+            Register
+          </Button>
         </Box>
       </Box>
+    </Box>
   );
 };
 

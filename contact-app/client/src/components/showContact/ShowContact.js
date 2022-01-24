@@ -13,21 +13,29 @@ const ShowContact = (props) => {
   const dispatch = useDispatch();
   const contact = useSelector((state) => state.selectedContact.selectedContact);
 
-  const showContactHandler = contact => {
+  const showContactHandler = (contact) => {
     dispatch(setMenu("EditContact"));
   };
-
+  console.log(props.rootStyle);
   return (
-    <Box className={props.rootStyle} border={1} borderColor={grey[400]}>
-      <Typography variant="h3" color="#575757">{props.heading_text}</Typography>
+    <Box className="contact-wrapper-show" border={1} borderColor={grey[400]}>
+      <Typography variant="h4" color="#575757">
+        Contact Information
+      </Typography>
       <form onSubmit={showContactHandler}>
         <Box className="contactinfo">
+          {/* <div className="nameinfo">
+            <p>Name : </p>
+            <p>{contact.name}</p>
+          </div> */}
           <TextField
             fullWidth
             margin="normal"
             // required
-            readOnly={true}
-            id="outlined-required"
+            InputProps={{
+              readOnly: true,
+            }}
+            id="outlined-read-only-input"
             label="Name"
             // defaultValue="Name"
             value={contact.name}
@@ -36,7 +44,7 @@ const ShowContact = (props) => {
             fullWidth
             margin="normal"
             // required
-            id="outlined-required"
+            id="outlined-read-only-input"
             label="Contact Number"
             value={contact.contact}
           />
@@ -44,7 +52,7 @@ const ShowContact = (props) => {
             fullWidth
             margin="normal"
             // required
-            id="outlined-required"
+            id="outlined-read-only-input"
             label="Email Id"
             value={contact.email}
             // defaultValue="Email Id"
@@ -53,12 +61,13 @@ const ShowContact = (props) => {
             fullWidth
             margin="normal"
             // required
-            id="outlined-multiline-flexible"
+            id="outlined-read-only-input"
             label="Address"
             value={contact.address}
             multiline
-            maxRows={4}
-          // defaultValue="Address"
+            minRows={2}
+            maxRows={2}
+            // defaultValue="Address"
           />
         </Box>
         <Box className="contact-add">
@@ -68,7 +77,7 @@ const ShowContact = (props) => {
         </Box>
       </form>
     </Box>
-  )
+  );
 };
 
 // document.getElementById("outlined-required").setAttribute("readonly", "true");

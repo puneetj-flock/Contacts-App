@@ -3,39 +3,38 @@
   display: flex;
   flex-direction: column;
 }
-.navbar {
+.search-box {
   flex: 2;
   display: flex;
-  background-color: grey;
+  background-color: #fff;
+  border-bottom: 1px solid grey;
   /* flex-direction: column; */
   justify-content: space-evenly;
   align-items: center;
-  /* min-height: 150px; */
+  max-height: 100px;
 }
 .search-bar {
   justify-content: center;
-  width: 60%;
+  width: 70%;
   border-radius: 25px;
-  background-color: rgb(219, 219, 219);
+  background-color: #eff2f5;
   padding: 12px;
+  /* display: flex;
+  align-items: center;
+  border: none;
+  outline-width: 0;
+  background-color: #f0f2f5;
+  border-radius: 30px;
+  width: 100%; */
 }
 .search-bar > input {
-  width: 100%;
   border: none;
-  outline: 0px;
-  background-color: transparent;
-  font-size: large;
+  outline-width: 0;
+  background-color: #eff2f5;
+  font-size: 16px;
+  width: 100%;
 }
 .add-contact {
   background-color: #dae6f1;
   border-radius: 100%;
-}
-.contact-list {
-  flex: 10;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(165, 164, 164);
-  /* height: calc(100vh - 150px); */
-  overflow-y: scroll;
-  /* scrollbar-color: grey; */
 }

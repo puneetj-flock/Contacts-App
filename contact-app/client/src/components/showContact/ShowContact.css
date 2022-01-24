@@ -11,9 +11,26 @@
     visibility: hidden;
 } */
 
-.contact-wrapper-show{
-  background-color: rgb(233, 235, 227);
-  width: 60%;
-  padding: 15px;
-  border-radius: 3px;
+.contact-wrapper-show {
+  max-width: 60%;
+  background-color: rgb(245, 245, 245);
+  padding: 40px;
+  border-radius: 10px;
+}
+
+#base-contact-button {
+  font-size: 18px;
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #fff;
+  border: 1px solid grey;
+  border-radius: 25px;
+  width: 20%;
+}
+
+#base-contact-button:hover {
+  border: none;
+  padding: 6px;
+  background-color: #8ac2f7;
+  color: #fff;
 }

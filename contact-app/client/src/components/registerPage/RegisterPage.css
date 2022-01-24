@@ -1,7 +1,7 @@
 .registerpage-wrapper {
   display: flex;
   flex: 1;
-  background-color: rgb(121, 117, 117);
+  background-color: rgb(245, 245, 245);
   justify-content: center;
   align-items: center;
   /* width: 100%;
@@ -11,15 +11,15 @@
 .registerpage-body {
   display: flex;
   flex-direction: column;
+  padding: 25px;
   width: 325px;
   height: 550px;
   border-radius: 20px;
-  background-color: rgb(115, 236, 170);
-  border: 1px solid black;
+  background-color: #fff;
 }
 
 .registerpage-header {
-  margin: 20px 80px;
+  margin: 20px 40px;
 }
 
 .registerpage-form {

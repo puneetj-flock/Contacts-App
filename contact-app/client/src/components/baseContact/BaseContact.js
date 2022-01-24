@@ -18,13 +18,15 @@ const BaseContact = (props) => {
     // return email.match(
     //   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     // );
-    // TODO: 
+    // TODO:
   };
 
   const changeHandler = (prop) => {
     return (event) => {
-      if (props.button_text !== "Edit")  {
-        dispatch(setSelectedContact({ ...contact, [prop]: event.target.value }));
+      if (props.button_text !== "Edit") {
+        dispatch(
+          setSelectedContact({ ...contact, [prop]: event.target.value })
+        );
       }
     };
   };
@@ -39,14 +41,16 @@ const BaseContact = (props) => {
 
   return (
     <Box className={props.rootStyle} border={1} borderColor={grey[400]}>
-      <Typography variant="h3" color="#575757">{props.heading_text}</Typography>
+      <Typography variant="h4" color="#575757">
+        {props.heading_text}
+      </Typography>
       <form onSubmit={ContactHandler}>
         <Box className="contactinfo">
           <TextField
             fullWidth
             margin="normal"
             // required
-            readOnly = {true}
+            readOnly={true}
             id="outlined-required"
             label="Name"
             // defaultValue="Name"
@@ -80,8 +84,9 @@ const BaseContact = (props) => {
             label="Address"
             value={contact.address}
             multiline
-            maxRows={4}
-            onChange={changeHandler("address") }
+            minRows={2}
+            maxRows={2}
+            onChange={changeHandler("address")}
             // defaultValue="Address"
           />
         </Box>
