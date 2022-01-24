@@ -1,16 +1,9 @@
 package com.example.contacts.db;
 
-import com.example.contacts.model.*;
-
-import static com.example.contacts.utils.DBConstants.AuthQueries.*;
-import static com.example.contacts.utils.DBConstants.ContactsQueries.*;
-import static com.example.contacts.utils.ObjectRowMapper.*;
-import static com.example.contacts.utils.DBConstants.Constants.*;
-import static org.springframework.http.HttpStatus.*;
-
+import com.example.contacts.model.Sessions;
+import com.example.contacts.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,6 +16,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.example.contacts.utils.DBConstants.AuthQueries.SESSION_SELECT;
+import static com.example.contacts.utils.DBConstants.AuthQueries.USER_REGISTER;
+import static com.example.contacts.utils.DBConstants.Constants.TIME_1_DAY;
+import static com.example.contacts.utils.DBConstants.ContactsQueries.*;
+import static com.example.contacts.utils.ObjectRowMapper.SessionObjectRowMapper;
+import static com.example.contacts.utils.ObjectRowMapper.UserRowMapper;
+import static org.springframework.http.HttpStatus.*;
+
 @Repository
 public class AuthDB {
 
@@ -30,7 +31,7 @@ public class AuthDB {
   NamedParameterJdbcTemplate jdbcTemplate;
 
   public Integer checkAuth(String Authorization) {
-//        System.out.println(sessionToken);
+//        System.out.println(Authorization);
     Timestamp current_time = Timestamp.from(Instant.now());
     Map<String, Object> sourceParams = new HashMap<>();
     sourceParams.put("session_token", Authorization);
@@ -38,31 +39,32 @@ public class AuthDB {
     try {
       session = jdbcTemplate.queryForObject(SESSION_SELECT, sourceParams, SessionObjectRowMapper);
     } catch (EmptyResultDataAccessException e) {
-      System.out.println(e);
-//            System.out.println("Session Not Found");
-      return null;
-//            throw new ResponseStatusException(UNAUTHORIZED);
+      throw new ResponseStatusException(UNAUTHORIZED);
     }
     if (session.getExpiryTime().getTime() < current_time.getTime()) {
       logout(Authorization);
       System.out.println("TIME EXPIRED\n");
-      return null;
-//            throw new ResponseStatusException(UNAUTHORIZED); // redirect to login
+      throw new ResponseStatusException(UNAUTHORIZED);
     }
     return session.getUserId();
   }
 
-  public boolean validateEmail(String email) {
-    Pattern VALID_EMAIL_ADDRESS_REGEX =
-      Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-    Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-    return matcher.find();
-  }
+//  public boolean validateEmail(String email) {
+//    Pattern VALID_EMAIL_ADDRESS_REGEX =
+//      Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+//
+//    Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+//    return matcher.find();
+//  }
 // add to user class
 
   public boolean register(User user) {
 
+    if(!user.validateEmail())
+    {
+      System.out.println("User email Wrong");
+      throw new ResponseStatusException(FORBIDDEN);
+    }
     BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
     int count = jdbcTemplate.update(USER_REGISTER, paramSource);
 
@@ -86,13 +88,18 @@ public class AuthDB {
   }
 
   public User login(User user) {
+    if(!user.validateEmail())
+    {
+      System.out.println("User email Wrong");
+     throw new ResponseStatusException(FORBIDDEN);
+    }
     BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
 
     try {
       user = jdbcTemplate.queryForObject(USER_SELECT, paramSource, UserRowMapper);
     } catch (EmptyResultDataAccessException e) {
       System.out.println(e);
-      throw new ResponseStatusException(NOT_FOUND);
+      throw new ResponseStatusException(FORBIDDEN);
     }
     System.out.println(user.getEmail());
     return user;

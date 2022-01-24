@@ -1,7 +1,8 @@
 package com.example.contacts.utils;
 
-import com.example.contacts.model.*;
-
+import com.example.contacts.model.ContactDetails;
+import com.example.contacts.model.Sessions;
+import com.example.contacts.model.User;
 import org.springframework.jdbc.core.RowMapper;
 
 public class ObjectRowMapper {

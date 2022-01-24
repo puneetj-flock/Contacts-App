@@ -1,11 +1,6 @@
 package com.example.contacts.db;
 
 import com.example.contacts.model.ContactDetails;
-
-import static com.example.contacts.utils.DBConstants.ContactsQueries.*;
-import static com.example.contacts.utils.ObjectRowMapper.ContactDetailsRowMapper;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.contacts.utils.DBConstants.ContactsQueries.*;
+import static com.example.contacts.utils.ObjectRowMapper.ContactDetailsRowMapper;
 
 @Repository
 public class ContactsDB {

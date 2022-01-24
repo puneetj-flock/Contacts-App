@@ -4,7 +4,6 @@ import com.example.contacts.db.AuthDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,16 +25,16 @@ public class AuthInterceptor implements HandlerInterceptor {
     System.out.println("Call Intercepted with " + sessionToken + "\n");
 
 
-//    Integer userId = auth.checkAuth(sessionToken);
-//    System.out.println(sessionToken + " " + userId);
+    Integer userId = auth.checkAuth(sessionToken);
+    System.out.println(sessionToken + " " + userId);
 
-//    if (sessionToken == null || userId == null) {
-//      response.setStatus(400);
-//      System.out.println("Request Failed at interceptor \n");
-//      return false;
-//    }
+    if (userId == null) {
+      response.setStatus(400);
+      System.out.println("Request Failed at interceptor \n");
+      return false;
+    }
 
-//    request.setAttribute("userId", userId);
+    request.setAttribute("userId", userId);
     return true;
   }
 

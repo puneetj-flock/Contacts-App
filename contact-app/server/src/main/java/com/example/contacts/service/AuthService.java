@@ -3,9 +3,12 @@ package com.example.contacts.service;
 import com.example.contacts.db.AuthDB;
 import com.example.contacts.model.User;
 import com.example.contacts.utils.SessionHelper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
+
+import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Repository
 public class AuthService {
@@ -29,8 +32,8 @@ public class AuthService {
   }
 
   public String register(User user) {
-    if(authDB.register(user)) return login(user);
-    return "User Already Registered";
+    if (authDB.register(user)) return login(user);
+    throw new ResponseStatusException(CONFLICT); // user already registered
   }
 
   public void logout(String sessionToken) {

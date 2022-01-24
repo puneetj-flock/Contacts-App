@@ -2,7 +2,6 @@ package com.example.contacts.controller;
 
 import com.example.contacts.model.User;
 import com.example.contacts.service.AuthService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
