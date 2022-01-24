@@ -1,8 +1,11 @@
 package com.example.contacts.db;
 
 import com.example.contacts.model.*;
+
+import static com.example.contacts.utils.DBConstants.AuthQueries.*;
+import static com.example.contacts.utils.DBConstants.ContactsQueries.*;
 import static com.example.contacts.utils.ObjectRowMapper.*;
-import static com.example.contacts.utils.Constants.*;
+import static com.example.contacts.utils.DBConstants.Constants.*;
 import static org.springframework.http.HttpStatus.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,78 +26,81 @@ import java.util.regex.Pattern;
 @Repository
 public class AuthDB {
 
-    @Autowired
-    NamedParameterJdbcTemplate jdbcTemplate;
+  @Autowired
+  NamedParameterJdbcTemplate jdbcTemplate;
 
-    public Integer checkAuth(String sessionToken) {
-        System.out.println(sessionToken);
-        Timestamp current_time = Timestamp.from(Instant.now());
-        Map<String, Object> sourceParams = new HashMap<>();
-        sourceParams.put("session_token", sessionToken);
-        Sessions session;
-        try {
-            session = jdbcTemplate.queryForObject(SQL_SESSION_SEL, sourceParams, SessionObjectRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println(e);
-            System.out.println("Session Not Found");
-            throw new ResponseStatusException(UNAUTHORIZED);
-        }
-        if (session.getExpiryTime().getTime() < current_time.getTime()) {
-            logout(sessionToken);
-            System.out.println("TIME EXPIRED\n");
-            throw new ResponseStatusException(UNAUTHORIZED); // redirect to login
-        }
-        return session.getUserId();
+  public Integer checkAuth(String Authorization) {
+//        System.out.println(sessionToken);
+    Timestamp current_time = Timestamp.from(Instant.now());
+    Map<String, Object> sourceParams = new HashMap<>();
+    sourceParams.put("session_token", Authorization);
+    Sessions session;
+    try {
+      session = jdbcTemplate.queryForObject(SESSION_SELECT, sourceParams, SessionObjectRowMapper);
+    } catch (EmptyResultDataAccessException e) {
+      System.out.println(e);
+//            System.out.println("Session Not Found");
+      return null;
+//            throw new ResponseStatusException(UNAUTHORIZED);
     }
-    public boolean validateEmail( String email)
-    {
-        Pattern VALID_EMAIL_ADDRESS_REGEX =
-                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-        return matcher.find();
+    if (session.getExpiryTime().getTime() < current_time.getTime()) {
+      logout(Authorization);
+      System.out.println("TIME EXPIRED\n");
+      return null;
+//            throw new ResponseStatusException(UNAUTHORIZED); // redirect to login
     }
+    return session.getUserId();
+  }
 
-    public String register(User user) {
-        if(!validateEmail(user.getEmail()))
-        {
-            throw new ResponseStatusException(NOT_IMPLEMENTED);
-        }
+  public boolean validateEmail(String email) {
+    Pattern VALID_EMAIL_ADDRESS_REGEX =
+      Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-        BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
-        int count = jdbcTemplate.queryForObject(SQL_USER_CNT, paramSource, Integer.class);
-        if (count > 0)
-            return "Error! User Already Registered";
-        jdbcTemplate.update(SQL_USER_INS, paramSource);
-        return "Registered";
+    Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+    return matcher.find();
+  }
+// add to user class
+
+  public boolean register(User user) {
+
+    BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
+    int count = jdbcTemplate.update(USER_REGISTER, paramSource);
+
+    if (count == 0) {
+      System.out.println("Error! User Already Registered");
+      return false;
     }
+    System.out.println("Registered");
+    return true;
+  }
 
-    public void addSession(User user, String session_token) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("session_token", session_token);
-        params.put("user_id", user.getId());
+
+  public void addSession(User user, String session_token) {
+    Map<String, Object> params = new HashMap<>();
+    params.put("session_token", session_token);
+    params.put("user_id", user.getId());
 //        TIME_1_HOUR
-        params.put("expiry_time", new Timestamp(System.currentTimeMillis() + TIME_1_DAY));
-        System.out.println(params);
-        jdbcTemplate.update(SQL_SESSION_INS, params);
-    }
+    params.put("expiry_time", new Timestamp(System.currentTimeMillis() + TIME_1_DAY));
+//        System.out.println(params);
+    jdbcTemplate.update(SESSION_INSERT, params);
+  }
 
-    public User login(User user) {
-        BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
+  public User login(User user) {
+    BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
 
-        try {
-            user = jdbcTemplate.queryForObject(SQL_USER_SEL, paramSource, UserRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            System.out.println(e);
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-        System.out.println(user.getEmail());
-        return user;
+    try {
+      user = jdbcTemplate.queryForObject(USER_SELECT, paramSource, UserRowMapper);
+    } catch (EmptyResultDataAccessException e) {
+      System.out.println(e);
+      throw new ResponseStatusException(NOT_FOUND);
     }
+    System.out.println(user.getEmail());
+    return user;
+  }
 
-    public void logout(String sessionToken) {
-        Map<String, Object> sourceParams = new HashMap<>();
-        sourceParams.put("session_token", sessionToken);
-        jdbcTemplate.update(SQL_SESSION_DEL, sourceParams);
-    }
+  public void logout(String sessionToken) {
+    Map<String, Object> sourceParams = new HashMap<>();
+    sourceParams.put("session_token", sessionToken);
+    jdbcTemplate.update(SESSION_DELETE, sourceParams);
+  }
 }

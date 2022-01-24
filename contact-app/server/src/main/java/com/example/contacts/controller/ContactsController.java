@@ -5,45 +5,46 @@ import com.example.contacts.service.ContactsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
+@RequestMapping("/contact")
+
 public class ContactsController {
 
-    @Autowired
-    private ContactsService contactsService;
+  @Autowired
+  private ContactsService contactsService;
 
 
-    @GetMapping("/status")
-    public String status() {
-        return "OK";
-    }
+  @GetMapping("/status")
+  public String status(@RequestAttribute String authorization) {
+    return authorization;
+  }
 
 
-    @GetMapping("/getContacts")
-    public List<ContactDetails> getContacts(@RequestHeader(value = "sessionToken") String sessionToken) {
-        return contactsService.getContacts(sessionToken);
-    }
+  @GetMapping("/get")
+  public List<ContactDetails> getContacts(@RequestHeader String sessionToken) {
+    return contactsService.getContacts(sessionToken);
+  }
 
-    @PostMapping("/addContact")
-    public void addContact(@RequestHeader(value = "sessionToken") String sessionToken,
-            @RequestBody ContactDetails contact) {
-        contactsService.addContact(sessionToken, contact);
-    }
+  @PostMapping("/add")
+  public void addContact(@RequestHeader String authorization,
+                         @RequestBody ContactDetails contact) {
+    contactsService.addContact(authorization, contact);
+  }
 
-    @PutMapping("/updateContact")
-    public void updateContact(@RequestHeader(value = "sessionToken") String sessionToken,
-            @RequestBody ContactDetails contact) {
-        contactsService.updateContact(sessionToken, contact);
-    }
+  @PutMapping("/update")
+  public void updateContact(@RequestHeader String authorization,
+                            @RequestBody ContactDetails contact) {
+    contactsService.updateContact(authorization, contact);
+  }
 
-    @DeleteMapping("/deleteContact")
-    public void deleteContact(@RequestHeader(value = "sessionToken") String sessionToken,
-            @RequestParam(value = "id") int contactId) {
-        contactsService.deleteContact(sessionToken, contactId);
-    }
+  @DeleteMapping("/delete")
+  public void deleteContact(@RequestHeader String sessionToken,
+                            @RequestParam(value = "id") int contactId) {
+    contactsService.deleteContact(sessionToken, contactId);
+  }
 
 }

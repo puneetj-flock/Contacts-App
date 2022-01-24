@@ -10,30 +10,30 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AuthService {
 
-    @Autowired
-    AuthDB authDB;
+  @Autowired
+  private AuthDB authDB;
 
-    public String createNewSession(User user) {
-        String session_token = SessionHelper.generateRandomToken();
-        authDB.addSession(user, session_token);
-        return session_token;
-    }
+  public String createNewSession(User user) {
+    String session_token = SessionHelper.generateRandomToken();
+    authDB.addSession(user, session_token);
+    return session_token;
+  }
 
-    public int checkAuth(String sessionToken) {
-        return authDB.checkAuth(sessionToken);
-    }
+  public int checkAuth(String sessionToken) {
+    return authDB.checkAuth(sessionToken);
+  }
 
-    public String login(User user) {
-        user = authDB.login(user);
-        return createNewSession(user);
-    }
+  public String login(User user) {
+    user = authDB.login(user);
+    return createNewSession(user);
+  }
 
-    public String register(User user) {
-        authDB.register(user);
-        return login(user);
-    }
+  public String register(User user) {
+    if(authDB.register(user)) return login(user);
+    return "User Already Registered";
+  }
 
-    public void logout(String sessionToken) {
-        authDB.logout(sessionToken);
-    }
+  public void logout(String sessionToken) {
+    authDB.logout(sessionToken);
+  }
 }

@@ -1,5 +1,4 @@
 export class APIManager {
-  
   static async request(url, method, body, isPostAuth = false, isJSON = false) {
     let headers = new Headers();
     if (isPostAuth) {

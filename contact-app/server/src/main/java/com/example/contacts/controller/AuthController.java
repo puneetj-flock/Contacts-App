@@ -6,36 +6,37 @@ import com.example.contacts.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    AuthService authService;
+  @Autowired
+  AuthService authService;
 
 
-    @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        return authService.register(user);
-    }
+  @PostMapping("/register")
+  public String register(@RequestBody User user) {
+    return authService.register(user);
+  }
 
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return authService.login(user);
-    }
+  @PostMapping("/login")
+  public String login(@RequestBody User user) {
+    return authService.login(user);
+  }
 
-    @GetMapping("/logout")
-    public void logout(@RequestHeader(value = "sessionToken") String sessionToken) {
-        authService.logout(sessionToken);
-    }
+  @GetMapping("/logout")
+  public void logout(@RequestHeader String sessionToken) {
+    authService.logout(sessionToken);
+  }
 
-    @GetMapping("/checkAuth")
-    public int checkAuth(@RequestHeader(value = "sessionToken") String sessionToken) {
-        return authService.checkAuth(sessionToken);
-    }
+  @GetMapping("/checkAuth")
+  public int checkAuth(@RequestHeader String sessionToken) {
+    return authService.checkAuth(sessionToken);
+  }
 
-    @GetMapping("/welcome")
-    public String hello() {
-        return "Welcome";
-    }
+  @GetMapping("/welcome")
+  public String hello() {
+    return "Welcome";
+  }
 }
