@@ -52,13 +52,13 @@ const MainContent = () => {
   }, []);
 
   //for long pooling
-  setInterval(() => {
-    console.log("SetInterval called\n");
+  // setInterval(() => {
+  //   console.log("SetInterval called\n");
 
-    ContactService.getContacts().then((res) => {
-      dispatch(setContacts(res));
-    });
-  }, 5000);
+  //   ContactService.getContacts().then((res) => {
+  //     dispatch(setContacts(res));
+  //   });
+  // }, 5000);
   // const logoutHandler = () => {
   //   let confirmLogout = window.confirm("Are you sure you want to logout?");
   //   if (confirmLogout) {

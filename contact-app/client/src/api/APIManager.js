@@ -17,7 +17,7 @@ export class APIManager {
       if(data.status === 400) {
         alert("Bad Request");
       } else if (data.status === 401) {
-        alert("Token Expired");
+        // alert("Token Expired");
       } else if (data.status === 403) {
         alert("Forbidden");
       } else if(data.status === 404) {
