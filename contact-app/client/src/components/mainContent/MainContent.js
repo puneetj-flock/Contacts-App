@@ -49,24 +49,15 @@ const MainContent = () => {
         navigate("/login", { replace: true });
       }
     });
+
+    // setInterval(() => {
+    //   console.log("SetInterval called\n");
+
+    //   ContactService.getContacts().then((res) => {
+    //     dispatch(setContacts(res));
+    //   });
+    // }, 5000);
   }, []);
-
-  //for long pooling
-  setInterval(() => {
-    console.log("SetInterval called\n");
-
-    ContactService.getContacts().then((res) => {
-      dispatch(setContacts(res));
-    });
-  }, 5000);
-  // const logoutHandler = () => {
-  //   let confirmLogout = window.confirm("Are you sure you want to logout?");
-  //   if (confirmLogout) {
-  //     AuthService.logoutUser();
-  //     localStorage.removeItem("sessionToken");
-  //     navigate("/login", { replace: true });
-  //   }
-  // };
 
   return (
     <>
