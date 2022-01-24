@@ -43,8 +43,7 @@ const RegisterPage = function () {
 
   const clickHandler = () => {
     if (validateEmail(registerInfo.email) && registerInfo.password !== "") {
-      AuthService.registerUser(registerInfo).then((res) => {
-        localStorage.setItem("sessionToken", res);
+      AuthService.registerUser(registerInfo).then(() => {
         navigate("/");
       });
     } else {

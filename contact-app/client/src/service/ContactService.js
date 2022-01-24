@@ -14,7 +14,7 @@ import { APIManager } from "../api/APIManager";
 export class ContactService{
 
     static getContacts() {
-        return APIManager.request(GET_CONTACTS, GET, null, true);
+      return APIManager.request(GET_CONTACTS, GET, null, true);
         // return await fetch(GET_CONTACTS, {
         //     method: "GET",
         //     headers: myHeaders,
@@ -27,8 +27,12 @@ export class ContactService{
         // });
     }
 
-    static addContact(contact) {
-        return APIManager.request(ADD_CONTACT, POST, JSON.stringify(contact), true, true);
+  static addContact(contact) {
+      return APIManager.request(ADD_CONTACT, POST, JSON.stringify(contact), true, true).then((res) => {
+        const resp = res;
+        console.log("RESP", resp);
+        return resp.id;
+      });
         // let myHeaders = new Headers();
         // myHeaders.append("sessionToken", this.sessionToken);
         // myHeaders.append("Content-Type", "application/json");
@@ -65,7 +69,7 @@ export class ContactService{
     static deleteContact(contactId) {
         var formData = new FormData();
         formData.append("id", contactId);
-        return APIManager.request(DELETE_CONTACT, DELETE, formData, true, true);
+        return APIManager.request(DELETE_CONTACT, DELETE, formData, true);
         // let myHeaders = new Headers();
         // myHeaders.append("sessionToken", this.sessionToken);
         // var formData = new FormData();

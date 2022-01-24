@@ -49,14 +49,6 @@ const MainContent = () => {
         navigate("/login", { replace: true });
       }
     });
-
-    // setInterval(() => {
-    //   console.log("SetInterval called\n");
-
-    //   ContactService.getContacts().then((res) => {
-    //     dispatch(setContacts(res));
-    //   });
-    // }, 5000);
   }, []);
 
   return (

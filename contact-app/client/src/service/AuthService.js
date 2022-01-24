@@ -12,7 +12,9 @@ import { APIManager } from "../api/APIManager";
 export class AuthService {
 
     static checkAuth() {
-        return APIManager.request(CHECK_AUTH, GET, null, true);
+      return APIManager.request(CHECK_AUTH, GET, null, true).then((res) => {
+            return res.userId;
+        });
         // return await fetch(CHECK_AUTH, {
         //     method: "GET",
         //     headers: myHeaders,
@@ -30,7 +32,10 @@ export class AuthService {
     }
 
     static registerUser(user) {
-        return APIManager.request(REGISTER_USER, POST, JSON.stringify(user), false, true);
+        return APIManager.request(REGISTER_USER, POST, JSON.stringify(user), false, true).then((res) => {
+            localStorage.setItem("sessionToken", res.sessionToken);
+        });
+
         // let myHeaders = new Headers();
         // myHeaders.append("Content-Type", "application/json");
         // return await fetch(REGISTER_USER, {
@@ -47,7 +52,10 @@ export class AuthService {
     }
 
     static loginUser(user) {
-        return APIManager.request(LOGIN_USER, POST, JSON.stringify(user), false, true);
+      return APIManager.request(LOGIN_USER, POST, JSON.stringify(user), false, true).then((res) => {
+        localStorage.setItem("sessionToken", res.sessionToken);
+      });
+
         // let myHeaders = new Headers();
         // myHeaders.append("Content-Type", "application/json");
         // return await fetch(LOGIN_USER, {
@@ -64,7 +72,9 @@ export class AuthService {
     }
 
     static logoutUser() {
-        return APIManager.request(LOGOUT_USER, GET, null, true);
+      return APIManager.request(LOGOUT_USER, GET, null, true).then(() => { 
+        localStorage.removeItem("sessionToken");
+      });
         // let myHeaders = new Headers();
         // myHeaders.append("sessionToken", this.sessionToken);
         // myHeaders.append("Content-Type", "application/json"); // TODO: No need
