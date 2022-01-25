@@ -1,5 +1,5 @@
 export class APIManager {
-  static async request(url, method, body, isPostAuth = false, isJSON = false) {
+  static async request(url, method, body, isPostAuth = false, isJSON = false, haveResponse = true) {
     let headers = new Headers();
     if (isPostAuth) {
       const sessionToken = localStorage.getItem("sessionToken");
@@ -14,6 +14,7 @@ export class APIManager {
       headers: headers,
       body: body,
     }).then((data) => {
+      console.log("data", data);
       if(data.status === 400) {
         alert("Bad Request");
       } else if (data.status === 401) {
@@ -25,9 +26,11 @@ export class APIManager {
       } else if (data.status === 500) {
         alert("Internal Server Error");
       }
-      const data_ = data.json();
-      console.log("data_", data_);
-      return data_;
+      if (haveResponse) {
+        const data_ = data.json();
+        console.log("data_", data_);
+        return data_;
+      }
     });
   }
 }

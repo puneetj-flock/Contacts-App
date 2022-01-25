@@ -51,7 +51,7 @@ export class ContactService{
     }
 
     static updateContact(contact) {
-        return APIManager.request(UPDATE_CONTACT, PUT, JSON.stringify(contact), true, true);
+        return APIManager.request(UPDATE_CONTACT, PUT, JSON.stringify(contact), true, true, false);
         // let myHeaders = new Headers();
         // myHeaders.append("sessionToken", this.sessionToken);
         // myHeaders.append("Content-Type", "application/json");
@@ -69,7 +69,7 @@ export class ContactService{
     static deleteContact(contactId) {
         var formData = new FormData();
         formData.append("id", contactId);
-        return APIManager.request(DELETE_CONTACT, DELETE, formData, true);
+        return APIManager.request(DELETE_CONTACT, DELETE, formData, true, false, false);
         // let myHeaders = new Headers();
         // myHeaders.append("sessionToken", this.sessionToken);
         // var formData = new FormData();
