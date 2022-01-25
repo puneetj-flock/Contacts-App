@@ -1,7 +1,9 @@
 package com.example.contacts.service;
 
+import com.example.contacts.db.AuthDB;
 import com.example.contacts.db.ContactsDB;
 import com.example.contacts.model.ContactDetails;
+import com.example.contacts.model.SessionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,27 +13,34 @@ import java.util.List;
 public class ContactsService {
 
   @Autowired
-  private ContactsDB contactsDB;
+  AuthDB authDB;
 
-  public List<ContactDetails> getContacts(Integer userId) {
-    // System.out.println("Reached Here get contact\n");
-    // Integer userId = authDB.checkAuth(authorization);
-    return contactsDB.getContacts(userId);
+  @Autowired
+  ContactsDB contactsDB;
+
+
+  public List<ContactDetails> getContacts(String sessionToken) {
+//    System.out.println("Reached Here get contact\n");
+    SessionData s = authDB.checkAuth(sessionToken);
+    return contactsDB.getContacts(s.getUserId());
   }
 
-  public ContactDetails addContact(Integer userId, ContactDetails contact) {
-    // System.out.println(userId);
-    contact.setUserId(userId);
+  public ContactDetails addContact(String sessionToken, ContactDetails contact) {
+    SessionData s = authDB.checkAuth(sessionToken);
+//    System.out.println(userId);
+    contact.setUserId(s.getUserId());
     return contactsDB.addContact(contact);
   }
 
-  public void deleteContact(Integer userId, Integer contactId) {
-    // Integer userId = authDB.checkAuth(authorization);
-    contactsDB.deleteContact(userId, contactId);
+  public void deleteContact(String sessionToken, Integer contactId) {
+    SessionData s = authDB.checkAuth(sessionToken);
+    System.out.println(s.getUserId());
+    contactsDB.deleteContact(s.getUserId(), contactId);
   }
 
-  public void updateContact(Integer userId, ContactDetails contact) {
-    contact.setUserId(userId);
+  public void updateContact( String sessionToken, ContactDetails contact) {
+    SessionData s = authDB.checkAuth(sessionToken);
+    contact.setUserId(s.getUserId());
     contactsDB.updateContact(contact);
   }
 }

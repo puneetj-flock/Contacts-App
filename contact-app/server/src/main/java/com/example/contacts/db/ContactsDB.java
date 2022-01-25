@@ -36,12 +36,13 @@ public class ContactsDB {
   }
 
   public void updateContact(ContactDetails contact) {
+//    System.out.println(contact);
     BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(contact);
     jdbcTemplate.update(CONTACT_UPDATE, paramSource);
   }
 
   public void deleteContact(Integer userId, Integer contactId) {
-    System.out.println("Contact Deleted\n");
+//    System.out.println("Contact Deleted\n");
     Map<String, Object> params = new HashMap<>();
     params.put("user_id", userId);
     params.put("id", contactId);

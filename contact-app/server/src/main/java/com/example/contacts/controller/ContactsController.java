@@ -23,28 +23,28 @@ public class ContactsController {
 
 
   @GetMapping("/get")
-  public List<ContactDetails> getContacts(@RequestAttribute Integer userId) {
+  public List<ContactDetails> getContacts( @RequestHeader String sessionToken) {
 //    System.out.println("Reached Controller\n");
-    return contactsService.getContacts(userId);
+    return contactsService.getContacts(sessionToken);
   }
 
   @PostMapping("/add")
-  public ContactDetails addContact(@RequestAttribute Integer userId,
+  public ContactDetails addContact( @RequestHeader String sessionToken,
                          @RequestBody ContactDetails contact) {
-    System.out.println("Reached here with userId " + userId);
-    return contactsService.addContact(userId, contact);
+//    System.out.println("Reached here with userId " + userId);
+    return contactsService.addContact(sessionToken, contact);
   }
 
   @PutMapping("/update")
-  public void updateContact(@RequestAttribute Integer userId,
+  public void updateContact( @RequestHeader String sessionToken,
                             @RequestBody ContactDetails contact) {
-    contactsService.updateContact(userId, contact);
+    contactsService.updateContact(sessionToken, contact);
   }
 
   @DeleteMapping("/delete")
-  public void deleteContact(@RequestAttribute Integer userId,
+  public void deleteContact( @RequestHeader String sessionToken,
                             @RequestParam(value = "id") int contactId) {
-    contactsService.deleteContact(userId, contactId);
+    contactsService.deleteContact(sessionToken, contactId);
   }
 
 }

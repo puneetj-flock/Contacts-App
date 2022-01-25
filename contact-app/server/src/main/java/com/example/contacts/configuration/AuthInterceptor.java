@@ -17,29 +17,25 @@ public class AuthInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-    if (Objects.equals(request.getMethod(), "OPTIONS")) {
-      return true;
-    }
-
-    String sessionToken = request.getHeader("sessionToken");
-    System.out.println("Call Intercepted with " + sessionToken + "\n");
-
-
-    Integer userId = authDB.checkAuth(sessionToken).getUserId();
-    System.out.println(sessionToken + " " + userId);
-
-    if (userId == null) {
-      response.setStatus(400);
-      System.out.println("Request Failed at interceptor \n");
-      return false;
-    }
-
-    request.setAttribute("userId", userId);
+//    if (Objects.equals(request.getMethod(), "OPTIONS")) {
+//      return true;
+//    }
+//
+//    String sessionToken = request.getHeader("sessionToken");
+//    System.out.println("Call Intercepted with " + sessionToken + "\n");
+//
+//
+//    Integer userId = authDB.checkAuth(sessionToken).getUserId();
+//    System.out.println(sessionToken + " " + userId);
+//
+//    if (userId == null) {
+//      response.setStatus(400);
+//      System.out.println("Request Failed at interceptor \n");
+//      return false;
+//    }
+//
+//    request.setAttribute("userId", userId);
     return true;
   }
 
 }
-
-// cmd + opt + l
-//argument resolvers
-//

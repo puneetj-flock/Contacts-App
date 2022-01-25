@@ -15,21 +15,26 @@ const AddContact = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const addContactHandler = contact => {
+  const addContactHandler = (contact) => {
     console.log("addContactHandler");
-    ContactService.addContact(contact).then(res => {
+    ContactService.addContact(contact).then((res) => {
       const id = "id";
       // contact = ;
       // console.log(contact);
-      // dispatch(setSelectedContact(emptyContact));
+      dispatch(setSelectedContact(emptyContact));
       dispatch(addContact({ ...contact, [id]: res }));
-      // dispatch(setMenu(""));
-    }); 
+      dispatch(setMenu(""));
+    });
     // reducer in get contact
   };
   return (
-    <BaseContact heading_text="Add New Contact" button_text="Save" rootStyle="contact-wrapper-add" ContactHandler={addContactHandler} />
-  )
+    <BaseContact
+      heading_text="Add New Contact"
+      button_text="Save"
+      rootStyle="contact-wrapper-add"
+      ContactHandler={addContactHandler}
+    />
+  );
 };
 
 export { AddContact };

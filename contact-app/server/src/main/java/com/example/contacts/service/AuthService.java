@@ -5,6 +5,7 @@ import com.example.contacts.model.User;
 import com.example.contacts.model.SessionData;
 import com.example.contacts.utils.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -38,7 +39,8 @@ public class AuthService {
 
   public SessionData register(User user) {
     if (authDB.register(user)) return login(user);
-    throw new ResponseStatusException(CONFLICT); // user already registered
+    throw new ResponseStatusException(CONFLICT, "User Already Registered"); // user already registered
+//    return null;
   }
 
   public void logout(String sessionToken) {
