@@ -8,17 +8,15 @@ export class APIManager {
     if (isJSON) {
       headers.append("Content-Type", "application/json");
     }
-    console.log("url", url);
     return await fetch(url, {
       method: method,
       headers: headers,
       body: body,
     }).then((data) => {
-      console.log("data", data);
       if(data.status === 400) {
         alert("Bad Request");
       } else if (data.status === 401) {
-        // alert("Token Expired");
+        alert("Token Expired");
       } else if (data.status === 403) {
         alert("Forbidden");
       } else if(data.status === 404) {
@@ -27,9 +25,7 @@ export class APIManager {
         alert("Internal Server Error");
       }
       if (haveResponse) {
-        const data_ = data.json();
-        console.log("data_", data_);
-        return data_;
+        return data.json();
       }
     });
   }

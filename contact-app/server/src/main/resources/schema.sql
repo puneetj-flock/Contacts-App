@@ -13,7 +13,7 @@ CREATE TABLE Contacts (
   name VARCHAR(255) DEFAULT "",
   email VARCHAR(255) DEFAULT "",
   address VARCHAR(255) DEFAULT "",
-  score INT DEFAULT 1000000,
+  score INT DEFAULT 0,
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES Users(id)
 );

@@ -24,14 +24,12 @@ public class ContactsController {
 
   @GetMapping("/get")
   public List<ContactDetails> getContacts( @RequestHeader String sessionToken) {
-//    System.out.println("Reached Controller\n");
     return contactsService.getContacts(sessionToken);
   }
 
   @PostMapping("/add")
   public ContactDetails addContact( @RequestHeader String sessionToken,
                          @RequestBody ContactDetails contact) {
-//    System.out.println("Reached here with userId " + userId);
     return contactsService.addContact(sessionToken, contact);
   }
 

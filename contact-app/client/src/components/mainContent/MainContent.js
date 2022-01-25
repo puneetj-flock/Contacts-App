@@ -38,9 +38,7 @@ const MainContent = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("MainContent");
     AuthService.checkAuth().then((res) => {
-      console.log("MainContent: checkAuth", res);
       if (res) {
         ContactService.getContacts().then((res) => {
           dispatch(setContacts(res));

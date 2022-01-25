@@ -17,20 +17,6 @@ export class AuthService {
       sessionStorage.setItem("name", resp.name);
       return resp.userId;
     });
-    // return await fetch(CHECK_AUTH, {
-    //     method: "GET",
-    //     headers: myHeaders,
-    // }).then((data) => {
-    //     console.log("GOT HERE", data);
-    //     if (data.status === 200) {
-    //         return data.text();
-    //     }
-    //     localStorage.removeItem("sessionToken");
-    //     return 0;
-    // }).catch((err) => {
-    //     localStorage.removeItem("sessionToken");
-    //     return 0;
-    // });
   }
 
   static registerUser(user) {
@@ -40,20 +26,6 @@ export class AuthService {
       let sessionStorage = window.sessionStorage;
       sessionStorage.setItem("name", resp.name);
     });
-
-    // let myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // return await fetch(REGISTER_USER, {
-    //     method: "POST",
-    //     headers: myHeaders,
-    //     body: JSON.stringify(user),
-    // }).then((data) => {
-    //     if (data.status === 401) {
-    //         throw new Error("Token Expired");
-    //     } else {
-    //         return data.text();
-    //     }
-    // });
   }
 
   static loginUser(user) {
@@ -63,20 +35,6 @@ export class AuthService {
       let sessionStorage = window.sessionStorage;
       sessionStorage.setItem("name", resp.name);
     });
-
-    // let myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // return await fetch(LOGIN_USER, {
-    //     method: "POST",
-    //     headers: myHeaders,
-    //     body: JSON.stringify(user),
-    // }).then((data) => {
-    //     if (data.status === 401) {
-    //         throw new Error("Token Expired");
-    //     } else {
-    //         return data.text();
-    //     }
-    // });
   }
 
   static logoutUser() {
@@ -85,17 +43,5 @@ export class AuthService {
       let sessionStorage = window.sessionStorage;
       sessionStorage.removeItem("name");
     });
-    // let myHeaders = new Headers();
-    // myHeaders.append("sessionToken", this.sessionToken);
-    // myHeaders.append("Content-Type", "application/json"); // TODO: No need
-
-    // return await fetch(LOGOUT_USER, {
-    //     method: "GET",
-    //     headers: myHeaders,
-    // }).then((data) => {
-    //     if (data.status === 401) {
-    //         throw new Error("Token Expired");
-    //     }
-    // });
   }
 }

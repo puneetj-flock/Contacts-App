@@ -39,8 +39,7 @@ public class AuthService {
 
   public SessionData register(User user) {
     if (authDB.register(user)) return login(user);
-    throw new ResponseStatusException(CONFLICT, "User Already Registered"); // user already registered
-//    return null;
+    throw new ResponseStatusException(CONFLICT, "User Already Registered");
   }
 
   public void logout(String sessionToken) {

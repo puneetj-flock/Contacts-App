@@ -16,7 +16,6 @@ const ShowContact = (props) => {
   const showContactHandler = (contact) => {
     dispatch(setMenu("EditContact"));
   };
-  console.log(props.rootStyle);
   return (
     <Box className="contact-wrapper-show" border={1} borderColor={grey[400]}>
       <Typography variant="h4" color="#575757">
@@ -24,26 +23,19 @@ const ShowContact = (props) => {
       </Typography>
       <form onSubmit={showContactHandler}>
         <Box className="contactinfo">
-          {/* <div className="nameinfo">
-            <p>Name : </p>
-            <p>{contact.name}</p>
-          </div> */}
           <TextField
             fullWidth
             margin="normal"
-            // required
             InputProps={{
               readOnly: true,
             }}
             id="outlined-read-only-input"
             label="Name"
-            // defaultValue="Name"
             value={contact.name}
           />
           <TextField
             fullWidth
             margin="normal"
-            // required
             id="outlined-read-only-input"
             label="Contact Number"
             value={contact.contact}
@@ -51,23 +43,19 @@ const ShowContact = (props) => {
           <TextField
             fullWidth
             margin="normal"
-            // required
             id="outlined-read-only-input"
             label="Email Id"
             value={contact.email}
-            // defaultValue="Email Id"
           />
           <TextField
             fullWidth
             margin="normal"
-            // required
             id="outlined-read-only-input"
             label="Address"
             value={contact.address}
             multiline
             minRows={2}
             maxRows={2}
-            // defaultValue="Address"
           />
         </Box>
         <Box className="contact-add">
@@ -80,6 +68,5 @@ const ShowContact = (props) => {
   );
 };
 
-// document.getElementById("outlined-required").setAttribute("readonly", "true");
 
 export { ShowContact };

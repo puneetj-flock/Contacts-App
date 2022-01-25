@@ -15,8 +15,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.example.contacts.utils.DBConstants.AuthQueries.SESSION_SELECT;
 import static com.example.contacts.utils.DBConstants.AuthQueries.USER_REGISTER;
@@ -33,7 +31,6 @@ public class AuthDB {
   private NamedParameterJdbcTemplate jdbcTemplate;
 
   public SessionData checkAuth(String Authorization) {
-//        System.out.println(Authorization);
     Timestamp current_time = Timestamp.from(Instant.now());
     Map<String, Object> sourceParams = new HashMap<>();
     sourceParams.put("session_token", Authorization);
@@ -49,7 +46,6 @@ public class AuthDB {
     }
     if (session.getExpiryTime().getTime() < current_time.getTime()) {
       logout(Authorization);
-      System.out.println("TIME EXPIRED\n");
       throw new ResponseStatusException(UNAUTHORIZED);
     }
     sessionData.setSessionToken(session.getSessionToken());
@@ -59,30 +55,18 @@ public class AuthDB {
     return sessionData;
   }
 
-//  public boolean validateEmail(String email) {
-//    Pattern VALID_EMAIL_ADDRESS_REGEX =
-//      Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-//
-//    Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
-//    return matcher.find();
-//  }
-// add to user class
-
   public boolean register(User user) {
 
     if(!user.validateEmail())
     {
-      System.out.println("User email Wrong");
       throw new ResponseStatusException(FORBIDDEN);
     }
     BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
     int count = jdbcTemplate.update(USER_REGISTER, paramSource);
 
     if (count == 0) {
-      System.out.println("Error! User Already Registered");
       return false;
     }
-    System.out.println("Registered");
     return true;
   }
 
@@ -91,16 +75,13 @@ public class AuthDB {
     Map<String, Object> params = new HashMap<>();
     params.put("session_token", session_token);
     params.put("user_id", user.getId());
-//        TIME_1_HOUR
     params.put("expiry_time", new Timestamp(System.currentTimeMillis() + TIME_1_DAY));
-//        System.out.println(params);
     jdbcTemplate.update(SESSION_INSERT, params);
   }
 
   public User login(User user) {
     if(!user.validateEmail())
     {
-      System.out.println("User email Wrong");
      throw new ResponseStatusException(FORBIDDEN);
     }
     BeanPropertySqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
@@ -108,10 +89,8 @@ public class AuthDB {
     try {
       user = jdbcTemplate.queryForObject(USER_SELECT, paramSource, UserRowMapper);
     } catch (EmptyResultDataAccessException e) {
-      System.out.println(e);
       throw new ResponseStatusException(FORBIDDEN);
     }
-    System.out.println(user.getEmail());
     return user;
   }
 

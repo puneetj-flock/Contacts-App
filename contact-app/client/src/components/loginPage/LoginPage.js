@@ -13,7 +13,6 @@ const LoginPage = function () {
   useEffect(() => {
     if (localStorage.getItem("sessionToken")) {
       AuthService.checkAuth().then((data) => {
-        console.log("Session Token Found at login page", data);
         navigate("/", { replace: true });
       });
     }
@@ -44,7 +43,6 @@ const LoginPage = function () {
           navigate("/", { replace: true });
         })
         .catch((err) => {
-          console.log("Error in Login");
         });
     } else {
       alert("Please Enter Correct Email");
@@ -68,7 +66,6 @@ const LoginPage = function () {
               margin="normal"
               id="outlined-required"
               label="Email"
-              // defaultValue="Email Id"
               onChange={changeHandler("email")}
             />
             <TextField
@@ -77,7 +74,6 @@ const LoginPage = function () {
               id="outlined-required"
               label="Password"
               type="password"
-              // defaultValue="Password"
               onChange={changeHandler("password")}
             />
             <Button type="submit" variant="contained" onClick={handleSignIn}>

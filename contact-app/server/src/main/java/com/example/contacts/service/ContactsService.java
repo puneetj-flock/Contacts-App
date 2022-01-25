@@ -20,21 +20,18 @@ public class ContactsService {
 
 
   public List<ContactDetails> getContacts(String sessionToken) {
-//    System.out.println("Reached Here get contact\n");
     SessionData s = authDB.checkAuth(sessionToken);
     return contactsDB.getContacts(s.getUserId());
   }
 
   public ContactDetails addContact(String sessionToken, ContactDetails contact) {
     SessionData s = authDB.checkAuth(sessionToken);
-//    System.out.println(userId);
     contact.setUserId(s.getUserId());
     return contactsDB.addContact(contact);
   }
 
   public void deleteContact(String sessionToken, Integer contactId) {
     SessionData s = authDB.checkAuth(sessionToken);
-    System.out.println(s.getUserId());
     contactsDB.deleteContact(s.getUserId(), contactId);
   }
 

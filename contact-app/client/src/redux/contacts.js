@@ -10,16 +10,13 @@ export const contactsSlice = createSlice({
     setContacts: (state, action) => {
       state.contacts = action.payload;
     },
-    // [... state.contacts, action.payload]: (state, action) => {
     addContact: (state, action) => {
       state.contacts.push(action.payload);
     },
     deleteStoreContact: (state, action) => {
-      console.log("redux deleteContact", action.payload);
       state.contacts = state.contacts.filter((contact) => contact.id !== action.payload);
     },
     updateContact: (state, action) => {
-      console.log("redux updateContact", action.payload);
       state.contacts = state.contacts.filter((contact) => contact.id !== action.payload.id);
       state.contacts.push(action.payload);
     },

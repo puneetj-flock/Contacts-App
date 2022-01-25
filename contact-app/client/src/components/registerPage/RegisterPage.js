@@ -16,7 +16,6 @@ const RegisterPage = function () {
   useEffect(() => {
     if (localStorage.getItem("sessionToken")) {
       AuthService.checkAuth().then((data) => {
-        console.log("Session Token Found at Register sending to home", data);
         navigate("/", { replace: true });
       });
     }
@@ -41,12 +40,12 @@ const RegisterPage = function () {
   };
 
   const clickHandler = () => {
-    if (validateEmail(registerInfo.email) && registerInfo.password !== "") {
+    if (validateEmail(registerInfo.email) && registerInfo.password !== "" && registerInfo.name !== "") {
       AuthService.registerUser(registerInfo).then(() => {
         navigate("/");
       });
     } else {
-      alert("Incorrect Email");
+      alert("Incorrect Details");
     }
   };
   return (

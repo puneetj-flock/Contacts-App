@@ -14,11 +14,21 @@ const BaseContact = (props) => {
   const contact = useSelector((state) => state.selectedContact.selectedContact);
 
   const validateEmail = (email) => {
-    return true;
-    // return email.match(
-    //   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    // );
-    // TODO:
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+
+  const validateName = (name) => {
+    return name.match(
+      /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/
+    );
+  };
+
+  const validateContactNumber = (contactNumber) => {
+    return contactNumber.match(
+      /^[0-9]{15}$/
+    );
   };
 
   const changeHandler = (prop) => {
@@ -32,11 +42,7 @@ const BaseContact = (props) => {
   };
 
   const ContactHandler = () => {
-    if (validateEmail(contact.email) && contact.name !== "") {
-      props.ContactHandler(contact);
-    } else {
-      alert("Please Enter correct values");
-    }
+    props.ContactHandler(contact);
   };
 
   return (
