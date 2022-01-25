@@ -11,15 +11,13 @@ const LoginPage = function () {
   let navigate = useNavigate();
 
   useEffect(() => {
-    AuthService.checkAuth().then((data) => {
-      console.log("Session Token Found at login page", data);
-      if (data) {
+    if (localStorage.getItem("sessionToken")) {
+      AuthService.checkAuth().then((data) => {
+        console.log("Session Token Found at login page", data);
         navigate("/", { replace: true });
-      } else {
-        // localStorage.removeItem("sessionToken");
-      }
-    });
-  }, [navigate]);
+      });
+    }
+  }, []);
 
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -42,7 +40,7 @@ const LoginPage = function () {
     if (validateEmail(loginInfo.email)) {
       AuthService
         .loginUser(loginInfo)
-        .then(() => {
+        .then((res) => {
           navigate("/", { replace: true });
         })
         .catch((err) => {

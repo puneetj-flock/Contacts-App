@@ -18,6 +18,11 @@ const Navbar = () => {
     }
   };
 
+  let user_name = window.sessionStorage.getItem("name");
+  if (user_name === "") {
+    user_name = "User";
+  }
+
   return (
     <div className="navbar">
       <div className="navbar-left">
@@ -35,7 +40,7 @@ const Navbar = () => {
       <div className="navbar-right">
         <div className="navbar-profile">
           <Avatar src="" style={{ height: "35px", width: "35px" }} />
-          <p> Puneet Jangid </p>
+          <p> { user_name }</p>
         </div>
 
         <div className="navbar-logout" onClick={logoutHandler}>

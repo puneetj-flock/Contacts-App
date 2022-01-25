@@ -14,14 +14,13 @@ const RegisterPage = function () {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const sessionToken = localStorage.getItem("sessionToken");
-    if (sessionToken) {
-      console.log("Session Token Found at Register sending to home");
-      navigate("/", { replace: true });
-    } else {
-      console.log("Session Token not found at Register");
+    if (localStorage.getItem("sessionToken")) {
+      AuthService.checkAuth().then((data) => {
+        console.log("Session Token Found at Register sending to home", data);
+        navigate("/", { replace: true });
+      });
     }
-  }, [navigate]);
+  }, []);
 
   const [registerInfo, setRegisterInfo] = useState({
     name: "",
